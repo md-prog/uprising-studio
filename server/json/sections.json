@@ -1,0 +1,43 @@
+[
+	{
+		"name": "index",
+		"bread": "hello",
+		"head": "",
+		"copylines": [""],
+		"subtitle": "",
+		"description": "",
+		"video": "video/_Home_converted.mp4",
+		"poster": "video/_Home_converted.jpg",
+		"cta": ""
+	}, {
+		"name": "work",
+		"bread": "work",
+		"head": "we",
+		"copylines": ["Design", "Develop", "Create"],
+		"subtitle": "Experiences across the\ndigital environment",
+		"description": "We are a passionate group obsessed about excellence\nand innovative technologies",
+		"video": "video/_Works_converted.mp4",
+		"poster": "video/_Works_converted.jpg",
+		"cta": "View projects"
+	}, {
+		"name": "about",
+		"bread": "about",
+		"head": "we are a",
+		"copylines": ["Digital", "Creative"],
+		"subtitle": "Design & production studio\nbased in Italy",
+		"description": "FWA x12\nAwww x5\nCannes lions x3\nOne show interactive x1",
+		"video": "video/_About_converted.mp4",
+		"poster": "video/_About_converted.jpg",
+		"cta": "Discover Uprising™"
+	}, {
+		"name": "contacts",
+		"bread": "contacts",
+		"head": "We’d love",
+		"copylines": ["To meet", "To know"],
+		"subtitle": "New agencies for sharing\nexciting digital projects",
+		"description": "If you'd like more information, you want to apply or simply like to say 'hello',\nthen please get in touch with an email.",
+		"video": "video/_Contacts_converted.mp4",
+		"poster": "video/_Contacts_converted.jpg",
+		"cta": "Let’s talk"
+	}
+]

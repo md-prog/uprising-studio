@@ -1,0 +1,68 @@
+[
+	{
+		"name": "Emporio Swissmade",
+		"client": "Giorgio armani",
+		"agency": "Scozzese design",
+		"route": "emporio-swissmade",
+		"video": "video/Armani Emprio.mp4",
+		"poster": "video/Armani Emprio.jpg",
+		"theme": "light",
+		"description": "Discover the complete watch collection,\nexperience the new Emporio Armani Swiss Made campaign and\nexplore the special extra contents that are only available online."
+	}, {
+		"name": "Frames of life",
+		"client": "Giorgio armani",
+		"agency": "Scozzese design",
+		"route": "frames-of-life",
+		"video": "video/Armani Frames Of Life.mp4",
+		"poster": "video/Armani Frames Of Life.jpg",
+		"theme": "light",
+		"description": "Browse through your eyes and discover 5 real stories.\nBeauty is in the eye of the beholder."
+	}, {
+		"name": "Fendilife",
+		"client": "Fendi",
+		"agency": "Unit9",
+		"route": "fendilife",
+		"video": "video/Fendi Life.mp4",
+		"poster": "video/Fendi Life.jpg",
+		"theme": "light",
+		"link": "http://fendilife.weareuprising.com/#/home",
+		"description": "To support the revealing of Fendi’s 2014 Spring/Summer collection,\nUnit9 and Uprising created this beautiful and stylish html5 microsite."
+	}, {
+		"name": "Expand Your Vision",
+		"client": "Abb",
+		"agency": "Havas",
+		"route": "expand-your-vision",
+		"video": "video/Abb Expand Your Vision.mp4",
+		"poster": "video/Abb Expand Your Vision.jpg",
+		"theme": "light",
+		"description": "ABB, Official Sponsor at Expo Milan 2015,\nhas built a digital environment in WebGL technology."
+	}, {
+		"name": "The beauty of a second",
+		"client": "Montblanc",
+		"agency": "Leo Burnett",
+		"route": "the-beauty-of-a-second",
+		"video": "video/Montblanc.mp4",
+		"poster": "video/Montblanc.jpg",
+		"theme": "light",
+		"description": "A short film contest, curated by the director Wim Wenders,\nto celebrate the 190th anniversary of the Nicolas Rieussec's chronograph."
+	}, {
+		"name": "10 ways to try and destroy a candy",
+		"client": "Candy",
+		"agency": "Vangogh",
+		"route": "10-ways-to-try-and-destroy-a-candy",
+		"video": "video/Candy.mp4",
+		"poster": "video/Candy.jpg",
+		"theme": "dark",
+		"link": "http://candy.uprsg.com/",
+		"description": "Ten Ways to Try and Destroy a Candy is a promotional micro-site,\nwhich illustrates and promotes Candy machines reliability."
+	}, {
+		"name": "Jägermusic",
+		"client": "Jägermeister",
+		"agency": "Beehive",
+		"route": "jagermusic",
+		"video": "video/Jagermusic.mp4",
+		"poster": "video/Jagermusic.jpg",
+		"theme": "light",
+		"description": "In the context of a brand re-positioning project,\nUprising was tasked to realised a digital project to build the\nbrand awareness among the electronic music community."
+	}
+]

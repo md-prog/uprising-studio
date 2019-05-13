@@ -1,0 +1,54 @@
+[
+	{
+		"client": "Alquimia",
+		"place": "Milan"
+	}, {
+		"client": "Arnold Worlwide",
+		"place": "Milan"
+	}, {
+		"client": "Auge",
+		"place": "Milan"
+	}, {
+		"client": "Chapeaux",
+		"place": "Milan"
+	}, {
+		"client": "Frog",
+		"place": "Milan"
+	}, {
+		"client": "JWT",
+		"place": "Milan"
+	}, {
+		"client": "Havas",
+		"place": "Milan"
+	}, {
+		"client": "Leo Burnett",
+		"place": "Milan"
+	}, {
+		"client": "M&C Saatchi",
+		"place": "Milan"
+	}, {
+		"client": "Mutado",
+		"place": "Milan"
+	}, {
+		"client": "Ogilvy",
+		"place": "Milan"
+	}, {
+		"client": "Razorfish",
+		"place": "Milan"
+	}, {
+		"client": "Saatchi & Saatchi",
+		"place": "Rome"
+	}, {
+		"client": "Scozzese design",
+		"place": "Desenzano sul garda"
+	}, {
+		"client": "The blue hive",
+		"place": "Rome"
+	}, {
+		"client": "Unit9",
+		"place": "London"
+	}, {
+		"client": "Vangogh",
+		"place": "Milan"
+	}
+]

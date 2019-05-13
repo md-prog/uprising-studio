@@ -1,0 +1,28 @@
+{
+  "name": "uprising-studio",
+  "version": "1.0.0",
+  "description": "Uprising studio website (http://www.weareuprising.com)",
+  "main": "index.js",
+  "scripts": {
+    "local": "node ./server/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://md-prog@github.com/md-prog/uprising-studio.git"
+  },
+  "keywords": [
+    "angularjs",
+    "greensocks",
+    "pixi"
+  ],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/md-prog/uprising-studio/issues"
+  },
+  "homepage": "https://github.com/md-prog/uprising-studio#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  }
+}
