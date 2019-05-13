@@ -1,7 +1,12 @@
 function e() {
     function e(e) {
         var t = "video/performance_test.mp4";
-        s = new PIXI.Container, a = new PIXI.Sprite(PIXI.Texture.fromVideoUrl(t)), a.texture.baseTexture.source.loop = !0, s.addChild(a), e.addChild(s), s.alpha = 0
+        s = new PIXI.Container;
+        a = new PIXI.Sprite(PIXI.Texture.fromVideoUrl(t));
+        a.texture.baseTexture.source.loop = !0;
+        s.addChild(a);
+        e.addChild(s);
+        s.alpha = 0
     }
 
     function t() {

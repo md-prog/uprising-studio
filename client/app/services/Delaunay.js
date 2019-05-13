@@ -3,8 +3,18 @@ function e(e) {
         l = Number.POSITIVE_INFINITY,
         u = Number.NEGATIVE_INFINITY,
         c = Number.NEGATIVE_INFINITY;
-    for (t = e.length; t--;) e[t][0] < o && (o = e[t][0]), e[t][0] > u && (u = e[t][0]), e[t][1] < l && (l = e[t][1]), e[t][1] > c && (c = e[t][1]);
-    return n = u - o, i = c - l, r = Math.max(n, i), s = o + .5 * n, a = l + .5 * i, [
+    for (t = e.length; t--;) {
+        e[t][0] < o && (o = e[t][0]);
+        e[t][0] > u && (u = e[t][0]);
+        e[t][1] < l && (l = e[t][1]);
+        e[t][1] > c && (c = e[t][1]);
+    }
+    n = u - o;
+    i = c - l;
+    r = Math.max(n, i);
+    s = o + .5 * n;
+    a = l + .5 * i;
+    return [
         [s - 20 * r, a - r],
         [s, a + 20 * r],
         [s + 20 * r, a - r]
@@ -20,8 +30,34 @@ function t(e, t, n, i) {
         y = e[i][1],
         x = Math.abs(m - v),
         b = Math.abs(v - y);
-    if (l > x && l > b) throw new Error("Eek! Coincident points!");
-    return l > x ? (o = -((w - g) / (y - v)), c = (g + w) / 2, d = (v + y) / 2, r = (g + $) / 2, s = o * (r - c) + d) : l > b ? (a = -((g - $) / (v - m)), u = ($ + g) / 2, h = (m + v) / 2, r = (w + g) / 2, s = a * (r - u) + h) : (a = -((g - $) / (v - m)), o = -((w - g) / (y - v)), u = ($ + g) / 2, c = (g + w) / 2, h = (m + v) / 2, d = (v + y) / 2, r = (a * u - o * c + d - h) / (a - o), s = x > b ? a * (r - u) + h : o * (r - c) + d), p = g - r, f = v - s, {
+    if (l > x && l > b)
+        throw new Error("Eek! Coincident points!");
+    if (l > x) {
+        o = -((w - g) / (y - v));
+        c = (g + w) / 2;
+        d = (v + y) / 2;
+        r = (g + $) / 2;
+        s = o * (r - c) + d
+    } else if (l > b) {
+        a = -((g - $) / (v - m));
+        u = ($ + g) / 2;
+        h = (m + v) / 2;
+        r = (w + g) / 2;
+        s = a * (r - u) + h
+    } else {
+        a = -((g - $) / (v - m));
+        o = -((w - g) / (y - v));
+        u = ($ + g) / 2;
+        c = (g + w) / 2;
+        h = (m + v) / 2;
+        d = (v + y) / 2;
+        r = (a * u - o * c + d - h) / (a - o);
+        s = x > b ? a * (r - u) + h : o * (r - c) + ;
+    }
+
+    p = g - r,
+        f = v - s;
+    return {
         i: t,
         j: n,
         k: i,
@@ -42,10 +78,20 @@ function n(e) {
 }
 
 function i(e, t, n) {
-    for (var i, r, a = e, o = t, l = [], u = 0; n > u; u++) i = Math.random() * a, r = Math.random() * o, l.push([i, r]);
-    return l.push([0, 0]), l.push([a, 0]), l.push([a, o]), l.push([0, o]), l.push([a / 2, o / 2]), l.forEach(_.bind(function (e) {
+    for (var i, r, a = e, o = t, l = [], u = 0; n > u; u++) {
+        i = Math.random() * a;
+        r = Math.random() * o;
+        l.push([i, r]);
+    }
+    l.push([0, 0]);
+    l.push([a, 0]);
+    l.push([a, o]);
+    l.push([0, o]);
+    l.push([a / 2, o / 2]);
+    l.forEach(_.bind(function (e) {
         e[0] = s(e[0], 0, a), e[1] = s(e[1], 0, o)
-    }, this)), l
+    }, this));
+    return l
 }
 
 function r(e) {

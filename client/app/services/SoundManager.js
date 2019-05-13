@@ -3,7 +3,9 @@ function e(e) {
         var e;
         _.each(u, function (t) {
             _.each(t, function (t) {
-                e = $('<audio preload="auto" />')[0], e.src = t.src + "?v=" + Date.now(), e.volume = 0, t.player = e
+                e = $('<audio preload="auto" />')[0];
+                e.src = t.src + "?v=" + Date.now();
+                e.volume = 0, t.player = e
             })
         })
     }
@@ -17,7 +19,8 @@ function e(e) {
             volume: l ? 0 : 1,
             ease: Linear.easeNone,
             onStart: function () {
-                u.menu.ambient.player.loop = !0, u.menu.ambient.player.paused && u.menu.ambient.player.play()
+                u.menu.ambient.player.loop = !0;
+                u.menu.ambient.player.paused && u.menu.ambient.player.play()
             }
         }) : TweenMax.to(u.menu.ambient.player, 1, {
             volume: 0,
@@ -33,7 +36,8 @@ function e(e) {
             volume: l ? 0 : 1,
             ease: Linear.easeNone,
             onStart: function () {
-                u.sections.ambient.player.loop = !0, u.sections.ambient.player.paused && u.sections.ambient.player.play()
+                u.sections.ambient.player.loop = !0;
+                u.sections.ambient.player.paused && u.sections.ambient.player.play()
             }
         }) : TweenMax.to(u.sections.ambient.player, 1, {
             volume: 0,

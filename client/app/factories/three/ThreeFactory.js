@@ -1,3 +1,5 @@
+const _ = require("underscore")
+
 module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function (e, t, n, i) {
     function r() {
         var t = !1,
@@ -7,7 +9,8 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
             o = ".jpg",
             l = [a + "px" + o, a + "nx" + o, a + "py" + o, a + "ny" + o, a + "pz" + o, a + "nz" + o],
             u = s.load(l);
-        return u.format = THREE.RGBFormat, {
+        u.format = THREE.RGBFormat;
+        return {
             getMenuMesh: function () {
                 var e = new THREE.Object3D,
                     t = new THREE.OBJLoader,
@@ -45,10 +48,11 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                         },
                         state: "contacts"
                     }];
-                return _.each(s, function (s, a) {
+                _.each(s, function (s, a) {
                     var o = new THREE.Object3D;
                     t.load(s.path, _.bind(function (t) {
-                        t.angle = i.randFloat(.02, .06), t.traverse(_.bind(function (e) {
+                        t.angle = i.randFloat(.02, .06);
+                        t.traverse(_.bind(function (e) {
                             if (e instanceof THREE.Mesh) {
                                 e.material = new THREE.MeshLambertMaterial({
                                     color: r.red,
@@ -60,56 +64,82 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                                     mVertices: [],
                                     wave: []
                                 };
-                                for (var n = t.length - 1; n >= 0; --n) e.data.oVertices[3 * n + 0] = t[3 * n + 0], e.data.oVertices[3 * n + 1] = t[3 * n + 1], e.data.oVertices[3 * n + 2] = t[3 * n + 2], e.data.mVertices[3 * n + 0] = t[3 * n + 0] + i.randFloat(-10, 10), e.data.mVertices[3 * n + 1] = t[3 * n + 1] + i.randFloat(-5, 5), e.data.mVertices[3 * n + 2] = t[3 * n + 2] + i.randFloat(-10, 10), e.data.wave[3 * n + 0] = {
-                                    amplitude: {
-                                        x: i.randFloat(-10, 10),
-                                        y: i.randFloat(-10, 10),
-                                        z: i.randFloat(-10, 10)
-                                    },
-                                    period: {
-                                        x: i.randFloat(100, 200),
-                                        y: i.randFloat(100, 200),
-                                        z: i.randFloat(100, 200)
-                                    }
-                                }, e.data.wave[3 * n + 1] = {
-                                    amplitude: {
-                                        x: i.randFloat(-10, 10),
-                                        y: i.randFloat(-10, 10),
-                                        z: i.randFloat(-10, 10)
-                                    },
-                                    period: {
-                                        x: i.randFloat(100, 200),
-                                        y: i.randFloat(100, 200),
-                                        z: i.randFloat(100, 200)
-                                    }
-                                }, e.data.wave[3 * n + 2] = {
-                                    amplitude: {
-                                        x: i.randFloat(-10, 10),
-                                        y: i.randFloat(-10, 10),
-                                        z: i.randFloat(-10, 10)
-                                    },
-                                    period: {
-                                        x: i.randFloat(100, 200),
-                                        y: i.randFloat(100, 200),
-                                        z: i.randFloat(100, 200)
-                                    }
+                                for (var n = t.length - 1; n >= 0; --n) {
+                                    e.data.oVertices[3 * n + 0] = t[3 * n + 0];
+                                    e.data.oVertices[3 * n + 1] = t[3 * n + 1];
+                                    e.data.oVertices[3 * n + 2] = t[3 * n + 2];
+                                    e.data.mVertices[3 * n + 0] = t[3 * n + 0] + i.randFloat(-10, 10);
+                                    e.data.mVertices[3 * n + 1] = t[3 * n + 1] + i.randFloat(-5, 5);
+                                    e.data.mVertices[3 * n + 2] = t[3 * n + 2] + i.randFloat(-10, 10);
+                                    e.data.wave[3 * n + 0] = {
+                                        amplitude: {
+                                            x: i.randFloat(-10, 10),
+                                            y: i.randFloat(-10, 10),
+                                            z: i.randFloat(-10, 10)
+                                        },
+                                        period: {
+                                            x: i.randFloat(100, 200),
+                                            y: i.randFloat(100, 200),
+                                            z: i.randFloat(100, 200)
+                                        }
+                                    };
+                                    e.data.wave[3 * n + 1] = {
+                                        amplitude: {
+                                            x: i.randFloat(-10, 10),
+                                            y: i.randFloat(-10, 10),
+                                            z: i.randFloat(-10, 10)
+                                        },
+                                        period: {
+                                            x: i.randFloat(100, 200),
+                                            y: i.randFloat(100, 200),
+                                            z: i.randFloat(100, 200)
+                                        }
+                                    };
+                                    e.data.wave[3 * n + 2] = {
+                                        amplitude: {
+                                            x: i.randFloat(-10, 10),
+                                            y: i.randFloat(-10, 10),
+                                            z: i.randFloat(-10, 10)
+                                        },
+                                        period: {
+                                            x: i.randFloat(100, 200),
+                                            y: i.randFloat(100, 200),
+                                            z: i.randFloat(100, 200)
+                                        }
+                                    };
                                 }
                             }
                         }, this));
-                        var l = new THREE.Mesh(new THREE.CubeGeometry(120, 120, 1), new THREE.MeshLambertMaterial({
-                                color: r.red,
-                                transparent: !0,
-                                opacity: 0,
-                                wireframe: !1
-                            })),
-                            u = new THREE.Mesh(new THREE.PlaneGeometry(64, 16), new THREE.MeshBasicMaterial({
-                                map: n.load(s.label),
-                                transparent: !0,
-                                wireframe: !1
-                            }));
-                        u.position.x = s.labelpos.x, u.position.y = s.labelpos.y, u.position.z = 1, o.index = a, o.name = "menu", o.state = s.state, o.add(t), o.add(l), o.add(u), e.add(o)
+                        var l = new THREE.Mesh(
+                                new THREE.CubeGeometry(120, 120, 1),
+                                new THREE.MeshLambertMaterial({
+                                    color: r.red,
+                                    transparent: !0,
+                                    opacity: 0,
+                                    wireframe: !1
+                                })
+                            ),
+                            u = new THREE.Mesh(
+                                new THREE.PlaneGeometry(64, 16),
+                                new THREE.MeshBasicMaterial({
+                                    map: n.load(s.label),
+                                    transparent: !0,
+                                    wireframe: !1
+                                })
+                            );
+                        u.position.x = s.labelpos.x;
+                        u.position.y = s.labelpos.y;
+                        u.position.z = 1;
+                        o.index = a;
+                        o.name = "menu";
+                        o.state = s.state;
+                        o.add(t);
+                        o.add(l);
+                        o.add(u);
+                        e.add(o)
                     }, this))
-                }, this), e
+                }, this);
+                return e
             },
             getTeamMesh: function () {
                 var e = "img/meshes/abstract.obj",
@@ -371,7 +401,14 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                 }
             },
             getFloorMesh: function () {
-                for (var n = 16, s = [], a = new THREE.Object3D, o = new e(5e3, 5e3, n, 1), l = o.diamondSquare(), c = this.getFloorPlane(5e3, 5e3, n, l), h = this.getFloorPlane(5e3, 5e3, n, l), d = new THREE.MeshStandardMaterial({
+                var n = 16,
+                    s = [],
+                    a = new THREE.Object3D,
+                    o = new e(5e3, 5e3, n, 1),
+                    l = o.diamondSquare(),
+                    c = this.getFloorPlane(5e3, 5e3, n, l),
+                    h = this.getFloorPlane(5e3, 5e3, n, l),
+                    d = new THREE.MeshStandardMaterial({
                         wireframe: t,
                         color: 1382167,
                         roughness: .25,
@@ -379,12 +416,17 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                         envMapIntensity: 5,
                         envMap: u,
                         shading: THREE.FlatShading
-                    }), p = new THREE.MeshBasicMaterial({
+                    }),
+                    p = new THREE.MeshBasicMaterial({
                         color: 4080708,
                         vertexColors: r.red,
                         wireframeLinewidth: 1,
                         wireframe: !0
-                    }), f = new THREE.Mesh(c, d), $ = new THREE.Mesh(h, p), m = 0, g = 0; n >= g; ++g)
+                    }),
+                    f = new THREE.Mesh(c, d),
+                    $ = new THREE.Mesh(h, p),
+                    m = 0;
+                for (var g = 0; n >= g; ++g)
                     for (var v = 0; n >= v; ++v) {
                         c.vertices[m];
                         s[m] = {
@@ -401,11 +443,25 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                             }
                         }, ++m
                     }
-                return f.receiveShadow = !0, f.receiveShadow = !0, $.position.y = 0, a.segments = n, a.terrain = l, a.waves = s, a.add(f), a.add($), a
+                f.receiveShadow = !0;
+                f.receiveShadow = !0;
+                $.position.y = 0;
+                a.segments = n;
+                a.terrain = l;
+                a.waves = s;
+                a.add(f);
+                a.add($);
+                return a
             },
             getFloorPlane: function (e, t, n, r) {
-                for (var s = new THREE.PlaneGeometry(e, t, n, n), a = 0, o = 0; n >= o; o++)
-                    for (var l = 0; n >= l; l++) s.vertices[a].x += i.randFloat(-150, 150), s.vertices[a].y += i.randFloat(-100, 100), s.vertices[a].z = r[o][l] + i.randFloat(-100, 200), a++;
+                var s = new THREE.PlaneGeometry(e, t, n, n), a = 0;
+                for (var o = 0; n >= o; o++)
+                    for (var l = 0; n >= l; l++) {
+                        s.vertices[a].x += i.randFloat(-150, 150);
+                        s.vertices[a].y += i.randFloat(-100, 100);
+                        s.vertices[a].z = r[o][l] + i.randFloat(-100, 200);
+                        a++;
+                    }
                 return s.mergeVertices(), s
             },
             getRoomMesh: function () {

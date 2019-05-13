@@ -1,9 +1,18 @@
+const _ = require("underscore")
+
 module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e, t, n, i) {
     function r(t, n) {
-        e.call(this, t, n), this.diff = 0, this.drag = !1, this.currface = -1, this.prevent = !1, this.mouse = {
+        e.call(this, t, n);
+        this.diff = 0;
+        this.drag = !1;
+        this.currface = -1;
+        this.prevent = !1;
+        this.mouse = {
             x: 0,
             y: 0
-        }, this.pitchs = [255, 195, 133, 91, 0], this.rotations = {
+        };
+        this.pitchs = [255, 195, 133, 91, 0];
+        this.rotations = {
             faces: {
                 start: 0,
                 curr: 0,
@@ -17,9 +26,19 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
             startMouseX: 0
         }
     }
-    return r.prototype.constructor = r, r.prototype = _.extend(Object.create(e.prototype), {
+
+    r.prototype.constructor = r;
+    r.prototype = _.extend(Object.create(e.prototype), {
         render: function () {
-            e.prototype.render.call(this), this.renderer.domElement.id = "info", this.camera.position.x = 235, this.camera.position.z = 570, this.camera.position.y = -146, this.camera.rotation.x = .174533, this.camera.rotation.y = .959931, this.camera.rotation.z = 0, this.camera.wave = {
+            e.prototype.render.call(this);
+            this.renderer.domElement.id = "info";
+            this.camera.position.x = 235;
+            this.camera.position.z = 570;
+            this.camera.position.y = -146;
+            this.camera.rotation.x = .174533;
+            this.camera.rotation.y = .959931;
+            this.camera.rotation.z = 0;
+            this.camera.wave = {
                 amplitude: {
                     x: 0,
                     y: 40
@@ -29,7 +48,13 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
                     y: 300
                 },
                 r: 0
-            }, this.scene.fog = new THREE.FogExp2(1053202, .006), this.room = this.factory.getRoomMesh(), this.room.rotation.x = .174533, this.room.rotation.y = -.959931, this.faces = this.factory.getTeamMesh(), this.particles = this.factory.getParticles({
+            };
+            this.scene.fog = new THREE.FogExp2(1053202, .006);
+            this.room = this.factory.getRoomMesh();
+            this.room.rotation.x = .174533;
+            this.room.rotation.y = -.959931;
+            this.faces = this.factory.getTeamMesh();
+            this.particles = this.factory.getParticles({
                 radius: {
                     min: 400,
                     max: 1e3
@@ -39,34 +64,70 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
                     max: 750
                 },
                 particles: 300
-            }), this.lights = this.factory.getLights(), this.lights.point1.light.position.set(500, -100, 500), this.lights.point1.light.target = this.faces, this.scene.add(this.room), this.scene.add(this.faces), this.scene.add(this.particles), this.scene.add(this.lights.ambient), this.scene.add(this.lights.point1.light);
+            });
+            this.lights = this.factory.getLights();
+            this.lights.point1.light.position.set(500, -100, 500);
+            this.lights.point1.light.target = this.faces;
+            this.scene.add(this.room);
+            this.scene.add(this.faces);
+            this.scene.add(this.particles);
+            this.scene.add(this.lights.ambient);
+            this.scene.add(this.lights.point1.light);
             var t = this.faces.rotation.x;
-            return this.rotations.faces.start = t, this.rotations.faces.curr = t, this.rotations.faces.last = t, this
+            this.rotations.faces.start = t;
+            this.rotations.faces.curr = t;
+            this.rotations.faces.last = t;
+            return this
         },
         onDown: function (e) {
-            this.isTeamPage() && (this.drag = !0, this.rotations.startMouseX = e.clientX - window.innerWidth / 2, this.rotations.faces.start = this.rotations.faces.curr, this.rotations.parts.start = this.rotations.parts.curr, this.prevent = this.hitMenuButton(e) || this.hitBackButton(e), this.prevent || (this.scope.$emit(i.HOLD_START), this.toggleZoom(!0)))
+            if (this.isTeamPage()) {
+                this.drag = !0;
+                this.rotations.startMouseX = e.clientX - window.innerWidth / 2;
+                this.rotations.faces.start = this.rotations.faces.curr;
+                this.rotations.parts.start = this.rotations.parts.curr;
+                this.prevent = this.hitMenuButton(e) || this.hitBackButton(e);
+                this.prevent || (this.scope.$emit(i.HOLD_START), this.toggleZoom(!0))
+            }
         },
         onMove: function (e) {
             if (this.isTeamPage()) {
-                this.mouse.x = e.clientX - window.innerWidth / 2, this.mouse.y = e.clientY - window.innerHeight / 2;
+                this.mouse.x = e.clientX - window.innerWidth / 2;
+                this.mouse.y = e.clientY - window.innerHeight / 2;
                 var t = Math.abs(this.mouse.x - this.rotations.startMouseX);
-                this.drag && t > 5 && (TweenMax.killTweensOf(this.faces.rotation), this.rotations.faces.curr = this.rotations.faces.start + (this.mouse.x - this.rotations.startMouseX) * -.01, this.rotations.parts.curr = this.rotations.parts.start + .01 * (this.mouse.x - this.rotations.startMouseX), this.intersectsCount = 0, this.diff = t)
+                if (this.drag && t > 5) {
+                    TweenMax.killTweensOf(this.faces.rotation);
+                    this.rotations.faces.curr = this.rotations.faces.start + (this.mouse.x - this.rotations.startMouseX) * -.01;
+                    this.rotations.parts.curr = this.rotations.parts.start + .01 * (this.mouse.x - this.rotations.startMouseX);
+                    this.intersectsCount = 0;
+                    this.diff = t
+                }
             }
         },
         onUp: function (e) {
-            this.isTeamPage() && (this.drag = !1, this.intersectsCount = 0, this.prevent = !1, this.toggleZoom(!1), this.scope.$emit(i.HOLD_END), this.diff > 5 && this.snapFace())
+            if (this.isTeamPage()) {
+                this.drag = !1;
+                this.intersectsCount = 0;
+                this.prevent = !1;
+                this.toggleZoom(!1);
+                this.scope.$emit(i.HOLD_END);
+                this.diff > 5 && this.snapFace()
+            }
         },
         toggleZoom: function (e) {
             var n = e ? 500 : 570,
                 i = e ? 5e-4 : 8e-4;
-            e && t.play("about", "zoom", !0), new TimelineMax({
-                tweens: [TweenMax.to(this.camera.position, 1.5, {
-                    z: n,
-                    ease: Expo.easeOut
-                }), TweenMax.to(this.scene.fog, 1.5, {
-                    density: i,
-                    ease: Expo.easeOut
-                })]
+            e && t.play("about", "zoom", !0);
+            new TimelineMax({
+                tweens: [
+                    TweenMax.to(this.camera.position, 1.5, {
+                        z: n,
+                        ease: Expo.easeOut
+                    }),
+                    TweenMax.to(this.scene.fog, 1.5, {
+                        density: i,
+                        ease: Expo.easeOut
+                    })
+                ]
             })
         },
         snapFace: function () {
@@ -85,28 +146,36 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
             (r - s + 360) % 360 > 180 && (a += 360);
             var o = _.indexOf(this.pitchs, s),
                 l = n.degToRad(s + a);
-            this.currface != o && this.scope.$emit(i.SNAP_TEAM, this.scope.data.infos.team[o]), TweenMax.to(this.faces.rotation, 1.5, {
+            this.currface != o && this.scope.$emit(i.SNAP_TEAM, this.scope.data.infos.team[o]);
+            TweenMax.to(this.faces.rotation, 1.5, {
                 x: l,
                 ease: Quint.easeOut,
                 onUpdate: _.bind(function () {
                     this.rotations.faces.curr = this.rotations.faces.last = this.faces.rotation.x
                 }, this)
-            }), this.currface = o, this.diff = 0
+            });
+            this.currface = o;
+            this.diff = 0
         },
         tweenIn: function () {
-            this.currface = 0, this.scope.$emit(i.SNAP_TEAM, this.scope.data.infos.team[0]);
+            this.currface = 0;
+            this.scope.$emit(i.SNAP_TEAM, this.scope.data.infos.team[0]);
             var e = 2 * Math.PI + this.getIncrRotation(this.pitchs[0]);
             return new TimelineMax({
-                tweens: [TweenMax.to(this.faces.rotation, 1.5, {
-                    x: e,
-                    ease: Quint.easeOut
-                }), TweenMax.to(this.rotations.parts, 1.5, {
-                    curr: e,
-                    ease: Quint.easeOut
-                }), TweenMax.to(this.scene.fog, 1.5, {
-                    density: 8e-4,
-                    ease: Quint.easeOut
-                })],
+                tweens: [
+                    TweenMax.to(this.faces.rotation, 1.5, {
+                        x: e,
+                        ease: Quint.easeOut
+                    }),
+                    TweenMax.to(this.rotations.parts, 1.5, {
+                        curr: e,
+                        ease: Quint.easeOut
+                    }),
+                    TweenMax.to(this.scene.fog, 1.5, {
+                        density: 8e-4,
+                        ease: Quint.easeOut
+                    })
+                ],
                 onUpdate: _.bind(function () {
                     this.rotations.faces.curr = this.rotations.faces.last = this.faces.rotation.x
                 }, this)
@@ -116,16 +185,20 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
             this.currface = -1, this.scope.$emit(i.SNAP_TEAM, null);
             var e = 2 * Math.PI + this.getIncrRotation(299);
             return new TimelineMax({
-                tweens: [TweenMax.to(this.faces.rotation, 1.5, {
-                    x: e,
-                    ease: Quint.easeOut
-                }), TweenMax.to(this.rotations.parts, 1.5, {
-                    curr: e,
-                    ease: Quint.easeOut
-                }), TweenMax.to(this.scene.fog, 1.5, {
-                    density: .006,
-                    ease: Quint.easeOut
-                })],
+                tweens: [
+                    TweenMax.to(this.faces.rotation, 1.5, {
+                        x: e,
+                        ease: Quint.easeOut
+                    }),
+                    TweenMax.to(this.rotations.parts, 1.5, {
+                        curr: e,
+                        ease: Quint.easeOut
+                    }),
+                    TweenMax.to(this.scene.fog, 1.5, {
+                        density: .006,
+                        ease: Quint.easeOut
+                    })
+                ],
                 onUpdate: _.bind(function () {
                     this.rotations.faces.curr = this.rotations.faces.last = this.faces.rotation.x
                 }, this)
@@ -149,7 +222,8 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
             return "team" == this.scope.currstate.params.to.page
         },
         udpate: function () {
-            e.prototype.udpate.call(this), this.updateCamera(), this.updateParticles(), this.updateTeamFaces()
+            e.prototype.udpate.call(this), this.updateCamera();
+            this.updateParticles(), this.updateTeamFaces()
         },
         updateCamera: function () {
             var e = this.camera.wave;
@@ -157,16 +231,23 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
         },
         updateTeamFaces: function () {
             if (this.faces.rotation.x = this.rotations.faces.last, this.faces.group) {
-                for (var e = this.faces.group, t = e.geometry.vertices.length, i = e.waves, r = t - 1; r >= 0; --r) e.geometry.vertices[r].x += .005 * n.swing(i[r].amplitude, i[r].period, this.angle, 0).x, e.geometry.vertices[r].y += .005 * n.swing(i[r].amplitude, i[r].period, this.angle, 0).y, e.geometry.vertices[r].z += .005 * n.swing(i[r].amplitude, i[r].period, this.angle, 0).z;
+                for (var e = this.faces.group, t = e.geometry.vertices.length, i = e.waves, r = t - 1; r >= 0; --r) {
+                    e.geometry.vertices[r].x += .005 * n.swing(i[r].amplitude, i[r].period, this.angle, 0).x;
+                    e.geometry.vertices[r].y += .005 * n.swing(i[r].amplitude, i[r].period, this.angle, 0).y;
+                    e.geometry.vertices[r].z += .005 * n.swing(i[r].amplitude, i[r].period, this.angle, 0).z;
+                }
                 e.geometry.verticesNeedUpdate = !0
             }
             this.rotations.faces.last += .025 * (this.rotations.faces.curr - this.rotations.faces.last)
         },
         updateParticles: function () {
-            this.particles.children[0].material.uniforms.angle.value = this.angle, this.particles.children[0].material.uniforms.lastRotation.value = this.rotations.parts.last, this.rotations.parts.last += .05 * (this.rotations.parts.curr - this.rotations.parts.last)
+            this.particles.children[0].material.uniforms.angle.value = this.angle;
+            this.particles.children[0].material.uniforms.lastRotation.value = this.rotations.parts.last;
+            this.rotations.parts.last += .05 * (this.rotations.parts.curr - this.rotations.parts.last)
         },
         clear: function () {
             this.drag = !1
         }
-    }), r
+    });
+    return r
 }]
