@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html class="desktop">
+<head>
+
+	<base href="/">
+
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+	<title>Uprising™ | Digital creative production company</title>
+
+	<meta name="keywords" content="" />
+	<meta name="description" content="Uprising™ is an independent digital creative production studio based in Milan, Italy. We are designers, we are developers, we are Uprising™" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+
+	<!-- Meta Facebook Markup -->
+	<meta property="og:url" content="http://www.weareuprising.com" >
+	<meta property="og:type" content="website" >
+	<meta property="og:title" content="Uprising™ | Digital creative production company" >
+	<meta property="og:description" content="Uprising™ is an independent digital creative production studio based in Milan, Italy. We are designers, we are developers, we are Uprising™" >
+	<meta property="og:image" content="http://www.weareuprising.com/img/uprising-share.png" >
+	<meta property="og:image:type" content="image/jpeg" >
+	<meta property="og:image:width" content="1280" >
+	<meta property="og:image:height" content="720" >
+
+	<!-- Twitter Card data -->
+	<meta name="twitter:card" content="summary" />
+	<meta name="twitter:site" content="http://www.weareuprising.com" />
+	<meta name="twitter:title" content="Uprising™ | Digital creative production company" />
+	<meta name="twitter:description" content="Uprising™ is an independent digital creative production studio based in Milan, Italy. We are designers, we are developers, we are Uprising™" />
+	<meta name="twitter:image" content="http://www.weareuprising.com/img/uprising-share.png" />
+
+	<!-- Meta Google Markup -->
+	<meta itemprop="name" content="Uprising™ | Digital creative production company">
+	<meta itemprop="description" content="Uprising™ is an independent digital creative production studio based in Milan, Italy. We are designers, we are developers, we are Uprising™">
+	<meta itemprop="image" content="http://www.weareuprising.com/img/uprising-share.png">
+
+	<link href="favicon.ico" rel="icon" type="image/x-icon" />
+
+	<link rel="stylesheet" href="css/main.css">
+
+	<script src="https://use.typekit.net/gyo0afl.js"></script>
+	<script> try { Typekit.load({ async:true }); } catch (e) {} </script>
+
+	<script>
+			
+		window.redirect = function (type) {
+			
+			switch (type) {
+
+				case 'mobile': window.open('alt/mobile/', '_self'); break;
+
+				case 'nowebgl': window.open('alt/modern-browser/', '_self'); break;
+
+				case 'lowperf': window.open('alt/modern-computer/', '_self'); break;
+			}
+		};
+
+		var deviceType = 'desktop';
+
+		if (deviceType == 'tablet' || deviceType == 'phone') 
+
+			window.redirect('mobile');
+
+	</script>
+
+</head>
+<body onload="init()">
+	
+	<!-- fonts-store -->
+	<div id="fonts-store">
+
+		<span class="din"></span>
+		<span class="timmons"></span>
+		<span class="montser-reg"></span>
+		<span class="montser-bold"></span>
+	
+	</div>
+	<!-- /fonts-store -->
+	
+	<!-- uprsg-site -->
+	<section id="uprsg-site" class="unselectable">
+		
+		<div id="site" ng-controller="AppController">
+			
+			<div id="view" ui-view></div>
+
+			<app-stage></app-stage>
+
+			<!--<debugger></debugger>-->
+
+		</div>
+
+	</section>
+	<!-- /uprsg-site -->
+
+	<script type="text/javascript" src="node_modules/pixi.js/bin/pixi.min.js"></script>
+	<script type="text/javascript" src="node_modules/three/build/three.min.js"></script>
+	<script type="text/javascript" src="node_modules/gsap/src/minified/TweenMax.min.js"></script>
+	<script type="text/javascript" src="node_modules/gsap/src/minified/plugins/EndArrayPlugin.min.js"></script>
+	<script type="text/javascript" src="node_modules/preloadjs/lib/preloadjs.min.js"></script>
+	<script type="text/javascript" src="node_modules/hammerjs/hammer.min.js"></script>
+	<script type="text/javascript" src="node_modules/jquery/dist/jquery.min.js"></script>
+	<script type="text/javascript" src="node_modules/jquery-mousewheel/jquery.mousewheel.js"></script>
+	<script type="text/javascript">
+		/**
+		 * init application
+		 */
+		function init () {
+			
+			var mainjs = 'js/main-build.js?v=0.1.1';
+
+			var script = document.createElement('script');
+			script.src = 'node_modules/requirejs/require.js';
+			script.setAttribute('data-main', mainjs);
+			script.type = 'text/javascript';
+			document.head.appendChild(script);
+		};
+		 
+	</script>
+
+	<!-- vertex shader -->
+<script type="x-shader/x-vertex" id="menuParticlesVertexshader">
+
+	#define PHONG
+
+	varying vec3 vViewPosition;
+
+	#ifndef FLAT_SHADED
+
+		varying vec3 vNormal;
+
+	#endif
+
+	#include <common>
+	#include <uv_pars_vertex>
+	#include <uv2_pars_vertex>
+	#include <displacementmap_pars_vertex>
+	#include <envmap_pars_vertex>
+	#include <color_pars_vertex>
+	#include <morphtarget_pars_vertex>
+	#include <skinning_pars_vertex>
+	#include <shadowmap_pars_vertex>
+	#include <logdepthbuf_pars_vertex>
+	#include <clipping_planes_pars_vertex>
+
+	//custom
+
+	uniform float angle;
+	uniform float lastRotation;
+
+    uniform float rotationX;
+    uniform float rotationY;
+    uniform float rotationZ;
+
+	attribute vec3 vPosition;
+	attribute vec3 vRotation;
+	attribute vec3 vAmplitude;
+	attribute vec3 vPeriod;
+	attribute vec3 cColor;
+
+	varying vec3 vNormal;
+	varying vec3 vColor;
+
+	vec2 rotate (float radius, float angle) { return vec2(radius * cos(angle), radius * sin(angle) ); }
+
+	void main() {
+
+		#include <uv_vertex>
+		#include <uv2_vertex>
+		#include <color_vertex>
+
+		#include <beginnormal_vertex>
+		#include <morphnormal_vertex>
+		#include <skinbase_vertex>
+		#include <skinnormal_vertex>
+		#include <defaultnormal_vertex>
+
+	#ifndef FLAT_SHADED // Normal computed with derivatives when FLAT_SHADED
+
+		vNormal = normalize( transformedNormal );
+
+	#endif
+
+		#include <begin_vertex>
+		#include <displacementmap_vertex>
+		#include <morphtarget_vertex>
+		#include <skinning_vertex>
+		#include <project_vertex>
+		#include <logdepthbuf_vertex>
+		#include <clipping_planes_vertex>
+
+		vViewPosition = - mvPosition.xyz;
+
+		#include <worldpos_vertex>
+		#include <envmap_vertex>
+		#include <shadowmap_vertex>
+
+		// custom
+
+		vec3 newPosition = vec3(position);
+
+		float newangle = vRotation.x;
+
+		newangle += -lastRotation * vRotation.y;
+
+		float rotation = angle * .05;
+
+		float x = rotate(vPosition.x, newangle).x + vAmplitude.x * cos(angle * 2.0 * 3.14159 / vPeriod.x);
+		float z = rotate(vPosition.x, newangle).y + vAmplitude.z * cos(angle * 2.0 * 3.14159 / vPeriod.z);
+		float y = vPosition.y + vAmplitude.y * sin(angle * 2.0 * 3.14159 / vPeriod.y);
+
+		// translate
+		mat4 tPos = mat4(vec4(1.0,0.0,0.0,0.0), vec4(0.0,1.0,0.0,0.0), vec4(0.0,0.0,1.0,0.0), vec4(x, y, z, 1.0));
+		
+		// rotation
+		mat4 rXPos = mat4(vec4(1.0,0.0,0.0,0.0), vec4(0.0,cos(rotation), -sin(rotation),0.0), vec4(0.0,sin(rotation), cos(rotation),0.0), vec4(0.0,0.0,0.0,1.0));
+		mat4 rYPos = mat4(vec4(cos(rotation), 0.0, sin(rotation),0.0), vec4(0.0,1.0,0.0,0.0), vec4(-sin(rotation), 0.0, cos(rotation),0.0), vec4(0.0,0.0,0.0,1.0));
+		mat4 rZPos = mat4(vec4(cos(rotation), -sin(rotation),0.0,0.0), vec4(sin(rotation),cos(rotation),0.0,0.0), vec4(0.0,0.0,1.0,0.0), vec4(0.0,0.0,0.0,1.0));
+		
+		// scale
+		mat4 sPos = mat4(vec4(vPosition.z,0.0,0.0,0.0), vec4(0.0,vPosition.z,0.0,0.0), vec4(0.0,0.0,vPosition.z,0.0), vec4(0.0,0.0,0.0,1.0));
+		
+		mat4 transform = tPos * rXPos * rZPos * rYPos * sPos;
+
+		vec4 wavePosition = transform * vec4(newPosition, 1.0);
+
+		mvPosition = modelViewMatrix * wavePosition;
+
+		vViewPosition = - mvPosition.xyz;
+
+		vNormal = normalMatrix * normal;
+
+		vColor = cColor;
+
+		gl_Position = projectionMatrix * mvPosition;
+	}
+
+</script>
+
+<!-- fragment shader -->
+<script type="x-shader/x-fragment" id="menuParticlesFragmentshader">
+	
+	#define PHONG
+
+	uniform vec3 diffuse;
+	uniform vec3 emissive;
+	uniform vec3 specular;
+	uniform float shininess;
+	uniform float opacity;
+
+	#include <common>
+	#include <packing>
+	#include <color_pars_fragment>
+	#include <uv_pars_fragment>
+	#include <uv2_pars_fragment>
+	#include <map_pars_fragment>
+	#include <alphamap_pars_fragment>
+	#include <aomap_pars_fragment>
+	#include <lightmap_pars_fragment>
+	#include <emissivemap_pars_fragment>
+	#include <envmap_pars_fragment>
+	#include <fog_pars_fragment>
+	#include <bsdfs>
+	#include <lights_pars>
+	#include <lights_phong_pars_fragment>
+	#include <shadowmap_pars_fragment>
+	#include <bumpmap_pars_fragment>
+	#include <normalmap_pars_fragment>
+	#include <specularmap_pars_fragment>
+	#include <logdepthbuf_pars_fragment>
+	#include <clipping_planes_pars_fragment>
+
+	// custom
+
+	varying vec3 vColor;
+
+	void main() {
+
+		#include <clipping_planes_fragment>
+
+		vec4 diffuseColor = vec4( diffuse, opacity );
+		ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
+		vec3 totalEmissiveRadiance = emissive;
+
+		#include <logdepthbuf_fragment>
+		#include <map_fragment>
+		#include <color_fragment>
+		#include <alphamap_fragment>
+		#include <alphatest_fragment>
+		#include <specularmap_fragment>
+		#include <normal_flip>
+		#include <normal_fragment>
+		#include <emissivemap_fragment>
+
+		// accumulation
+		#include <lights_phong_fragment>
+		#include <lights_template>
+
+		// modulation
+		#include <aomap_fragment>
+
+		vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular + totalEmissiveRadiance;
+
+		#include <envmap_fragment>
+
+		gl_FragColor = vec4( outgoingLight * vColor, diffuseColor.a );
+
+		#include <premultiplied_alpha_fragment>
+		#include <tonemapping_fragment>
+		#include <encodings_fragment>
+		#include <fog_fragment>
+	}
+	
+</script>	<!-- vertex shader -->
+<script type="x-shader/x-vertex" id="infosFacesVertexshader">
+
+	#define PHONG
+
+	varying vec3 vViewPosition;
+
+	#ifndef FLAT_SHADED
+
+		varying vec3 vNormal;
+
+	#endif
+
+	#include <common>
+	#include <uv_pars_vertex>
+	#include <uv2_pars_vertex>
+	#include <displacementmap_pars_vertex>
+	#include <envmap_pars_vertex>
+	#include <color_pars_vertex>
+	#include <morphtarget_pars_vertex>
+	#include <skinning_pars_vertex>
+	#include <shadowmap_pars_vertex>
+	#include <logdepthbuf_pars_vertex>
+	#include <clipping_planes_pars_vertex>
+
+	//custom
+
+	uniform float angle;
+
+	attribute vec3 vWave;
+
+	varying vec3 vNormal;
+	varying vec3 vColor;
+
+	void main() {
+
+		#include <uv_vertex>
+		#include <uv2_vertex>
+		#include <color_vertex>
+
+		#include <beginnormal_vertex>
+		#include <morphnormal_vertex>
+		#include <skinbase_vertex>
+		#include <skinnormal_vertex>
+		#include <defaultnormal_vertex>
+
+	#ifndef FLAT_SHADED // Normal computed with derivatives when FLAT_SHADED
+
+		vNormal = normalize( transformedNormal );
+
+	#endif
+
+		#include <begin_vertex>
+		#include <displacementmap_vertex>
+		#include <morphtarget_vertex>
+		#include <skinning_vertex>
+		#include <project_vertex>
+		#include <logdepthbuf_vertex>
+		#include <clipping_planes_vertex>
+
+		vViewPosition = - mvPosition.xyz;
+
+		#include <worldpos_vertex>
+		#include <envmap_vertex>
+		#include <shadowmap_vertex>
+
+		// custom
+
+		vec3 newPosition = vec3(position);
+
+		float x = vWave.x * cos(angle * 2.0 * 3.14159 / 200.0);
+		float y = vWave.y * sin(angle * 2.0 * 3.14159 / 200.0);
+		float z = vWave.z * cos(angle * 2.0 * 3.14159 / 200.0);
+
+		// translate
+		mat4 tPos = mat4(vec4(1.0,0.0,0.0,0.0), vec4(0.0,1.0,0.0,0.0), vec4(0.0,0.0,1.0,0.0), vec4(x, y, z, 1.0));
+
+		mat4 transform = tPos;
+
+		vec4 wavePosition = transform * vec4(newPosition, 1.0);
+
+		mvPosition = modelViewMatrix * wavePosition;
+
+		vViewPosition = - mvPosition.xyz;
+
+		vNormal = normalMatrix * normal;
+
+		//vColor = cColor;
+
+		gl_Position = projectionMatrix * mvPosition;
+
+	}
+
+</script>
+
+<!-- fragment shader -->
+<script type="x-shader/x-fragment" id="infosFacesFragmentshader">
+
+	#define PHONG
+
+	uniform vec3 diffuse;
+	uniform vec3 emissive;
+	uniform vec3 specular;
+	uniform float shininess;
+	uniform float opacity;
+
+	#include <common>
+	#include <packing>
+	#include <color_pars_fragment>
+	#include <uv_pars_fragment>
+	#include <uv2_pars_fragment>
+	#include <map_pars_fragment>
+	#include <alphamap_pars_fragment>
+	#include <aomap_pars_fragment>
+	#include <lightmap_pars_fragment>
+	#include <emissivemap_pars_fragment>
+	#include <envmap_pars_fragment>
+	#include <fog_pars_fragment>
+	#include <bsdfs>
+	#include <lights_pars>
+	#include <lights_phong_pars_fragment>
+	#include <shadowmap_pars_fragment>
+	#include <bumpmap_pars_fragment>
+	#include <normalmap_pars_fragment>
+	#include <specularmap_pars_fragment>
+	#include <logdepthbuf_pars_fragment>
+	#include <clipping_planes_pars_fragment>
+
+	void main() {
+
+		#include <clipping_planes_fragment>
+
+		vec4 diffuseColor = vec4( diffuse, opacity );
+		ReflectedLight reflectedLight = ReflectedLight( vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ), vec3( 0.0 ) );
+		vec3 totalEmissiveRadiance = emissive;
+
+		#include <logdepthbuf_fragment>
+		#include <map_fragment>
+		#include <color_fragment>
+		#include <alphamap_fragment>
+		#include <alphatest_fragment>
+		#include <specularmap_fragment>
+		#include <normal_flip>
+		#include <normal_fragment>
+		#include <emissivemap_fragment>
+
+		// accumulation
+		#include <lights_phong_fragment>
+		#include <lights_template>
+
+		// modulation
+		#include <aomap_fragment>
+
+		vec3 outgoingLight = reflectedLight.directDiffuse + reflectedLight.indirectDiffuse + reflectedLight.directSpecular + reflectedLight.indirectSpecular + totalEmissiveRadiance;
+
+		#include <envmap_fragment>
+
+		gl_FragColor = vec4( outgoingLight, diffuseColor.a );
+
+		#include <premultiplied_alpha_fragment>
+		#include <tonemapping_fragment>
+		#include <encodings_fragment>
+		#include <fog_fragment>
+
+	}
+
+</script>
+</body>
+</html>

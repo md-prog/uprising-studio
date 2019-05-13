@@ -1,0 +1,156 @@
+/**
+* main.css
+*/
+
+@font-face {
+    font-family: 'Timmons';
+    src: url('fonts/timmons/TIMMONS_NY_FINAL.eot');
+    src: url('fonts/timmons/TIMMONS_NY_FINAL.eot') format('embedded-opentype'),
+        url('fonts/timmons/TIMMONS_NY_FINAL.woff2') format('woff2'),
+        url('fonts/timmons/TIMMONS_NY_FINAL.woff') format('woff'),
+        url('fonts/timmons/TIMMONS_NY_FINAL.ttf') format('truetype'),
+        url('fonts/timmons/TIMMONS_NY_FINAL.svg#TIMMONS_NY_FINAL') format('svg');
+}
+
+@font-face {
+    font-family: 'Montser-reg';
+    src: url('fonts/montserrat/montserrat-regular.eot');
+    src: url('fonts/montserrat/montserrat-regular.eot') format('embedded-opentype'),
+        url('fonts/montserrat/montserrat-regular.woff2') format('woff2'),
+        url('fonts/montserrat/montserrat-regular.woff') format('woff'),
+        url('fonts/montserrat/montserrat-regular.ttf') format('truetype'),
+        url('fonts/montserrat/montserrat-regular.svg#montserrat-regular') format('svg');
+}
+
+@font-face {
+    font-family: 'Montser-bold';
+    src: url('fonts/montserrat/montserrat-bold.eot');
+    src: url('fonts/montserrat/montserrat-bold.eot') format('embedded-opentype'),
+        url('fonts/montserrat/montserrat-bold.woff2') format('woff2'),
+        url('fonts/montserrat/montserrat-bold.woff') format('woff'),
+        url('fonts/montserrat/montserrat-bold.ttf') format('truetype'),
+        url('fonts/montserrat/montserrat-bold.svg#montserrat-bold') format('svg');
+}
+
+html {
+    overflow: hidden;
+    -webkit-tap-highlight-color: transparent;
+}
+
+body {
+    background-color: #181818;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    box-sizing: border-box;
+}
+
+.timmons {
+    font-family: 'Timmons';
+}
+
+.montser-reg {
+    font-family: 'Montser-reg';
+}
+
+.montser-bold {
+    font-family: 'Montser-bold';
+}
+
+.din {
+    font-family: 'din-condensed-web', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.unselectable,
+img {
+    user-select: none;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+    -webkit-user-drag: none;
+}
+
+#uprsg-site {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+}
+
+#uprsg-site #site {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 1;
+    font-size: 16px;
+}
+
+
+/**
+* Stage
+*/
+#stage {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    overflow: hidden;
+    z-index: 1;
+}
+
+#stage canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #181818;
+    -webkit-font-smoothing: antialiased;
+}
+
+
+/**
+ * debugger
+ */
+#debugger {
+    position: absolute;
+    background-color: rgba(0, 0, 0, .5);
+    margin-left: 0px;
+    height: auto;
+    width: 220px;
+    left: 0px;
+    bottom: 0;
+    padding: .5em 1em;
+    opacity: .35;
+    z-index: 99;
+    pointer-events: none;
+}
+
+#debugger .param {
+    font-size: 12px;
+    padding: .15em 0;
+    clear: both;
+}
+
+#debugger .param .value {
+    color: #00ff90;
+    float: right;
+}
+
+#debugger .param .label {
+    color: #fff;
+    float: left;
+}
+
+
+/*#debugger { display: none; }*/

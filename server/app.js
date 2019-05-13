@@ -6,13 +6,10 @@ const portnum = 3000
 const proj_root = path.join(__dirname, '../')
 console.log('Project root is set to ' + proj_root)
 
-
 app.get('/', function (req, res) {
-    res.sendFile(path.join(proj_root, 'client/index.html'))
+    res.sendFile(path.join(proj_root, 'client'))
 })
-app.get('/favicon.png', function (req, res) {
-    res.sendFile(path.join(proj_root, 'client/favicon.png'))
-})
+app.use('/node_modules', express.static(path.join(proj_root, 'node_modules')))
 app.use('/json', express.static(path.join(proj_root, 'server/json')))
 
 app.listen(portnum)

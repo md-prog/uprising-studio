@@ -1,0 +1,17 @@
+<div id="debugger">
+    <div class="param">
+        <span class="label montser-reg">Frame Rate:</span><span class="value montser-bold">{{memory.frameRate}} Fps</span>
+    </div>
+    <div class="param">
+        <span class="label montser-reg">Children + Cache:</span>
+        <span class="value montser-bold">{{memory.childrenAndCache}}</span>
+    </div>
+    <div class="param">
+        <span class="label montser-reg">Performance:</span>
+        <span class="value montser-bold" style="color: {{memory.performanceColor}};">{{memory.performance}}</span>
+    </div>
+    <div class="param">
+        <span class="label montser-reg">Memory Use:</span>
+        <span class="value montser-bold" style="color: {{memory.memoryColor}};">{{memory.memoryUse}}</span>
+    </div>
+</div>
