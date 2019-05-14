@@ -1,6 +1,6 @@
 const _ = require('underscore')
 
-return ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro", "Identity", "Clients", "Holdrag", "Utils", "Events", "Math2", function (e, t, n, i, r, s, a, o, l, u) {
+module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro", "Identity", "Clients", "Holdrag", "Utils", "Events", "Math2", function (e, t, n, i, r, s, a, o, l, u) {
     function c(t) {
         e.call(this), this.scope = t || {}
     }
@@ -271,7 +271,8 @@ return ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro", "Identity
             })
         },
         tweenOut: function () {
-            return this.$holdrag.kill(), new TimelineMax({
+            this.$holdrag.kill();
+            return new TimelineMax({
                 tweens: [TweenMax.to(this.$el.scale, .75, {
                     x: 1.25,
                     y: 1.25,
@@ -307,7 +308,8 @@ return ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro", "Identity
             this.$mouselabels.y = e.y - 80;
             this.identity && this.identity.resize(e);
             n = e.w / e.h > 1280 / 720 ? e.w / 1280 : e.h / 720;
-            this.$scene.scale.x = n / i, this.$scene.scale.y = n / i;
+            this.$scene.scale.x = n / i;
+            this.$scene.scale.y = n / i;
         },
         destroy: function () {
             t.clear("infos");

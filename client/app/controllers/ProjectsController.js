@@ -1,9 +1,11 @@
+const _ = require('underscore')
+
 function e(e, t, n, i, r) {
     var s = "work.wall",
         a = "work.wall.leaf";
     this.wallCount = 0, this.leafCount = 0, this.update = function () {
         this.textures || (this.textures = e.data.projects.textures.items, this.collection = e.data.projects.collection, this.wallLimit = Math.ceil(this.collection.length / 2) - 1, this.leafLimit = this.collection.length - 1)
-    }, this.addEvents = function () {
+    }; this.addEvents = function () {
         e.$on(n.OPEN_LEAF, _.bind(function (n, i) {
             var r = e.currstate.to;
             t.go(r.data.link, {
@@ -13,10 +15,14 @@ function e(e, t, n, i, r) {
             e.currstate.to;
             n.link && window.open(n.link, "_blank")
         }, this))
-    }, this.setState = function (t) {
-        this.wallCount = parseInt(t.params.to.page) - 1, this.leafCount = _.indexOf(this.collection, _.where(this.collection, {
+    }; this.setState = function (t) {
+        this.wallCount = parseInt(t.params.to.page) - 1;
+        this.leafCount = _.indexOf(this.collection, _.where(this.collection, {
             route: e.currstate.params.to.leaf
-        })[0]), isNaN(this.wallCount) && (this.wallCount = -1), isNaN(this.leafCount) && (this.leafCount = -1), this.setTextureState(t)
+        })[0]);
+        isNaN(this.wallCount) && (this.wallCount = -1);
+        isNaN(this.leafCount) && (this.leafCount = -1);
+        this.setTextureState(t)
     }, this.setTextureState = function (e) {
         var t = e.to.data.type;
         if (t == r.PagesTypes.WALL) {
@@ -42,7 +48,8 @@ function e(e, t, n, i, r) {
     }, this.getSides = function (e) {
         var t = 2 * e,
             n = t + 1;
-        return n > this.collection.length - 1 && (t = this.collection.length - 2, n = this.collection.length - 1), {
+        n > this.collection.length - 1 && (t = this.collection.length - 2, n = this.collection.length - 1);
+        return {
             left: t,
             right: n
         }
@@ -54,7 +61,8 @@ function e(e, t, n, i, r) {
             dir: e
         }))
     }, this.updateLeaf = function (e) {
-        this.leafCount += e, this.leafCount > this.leafLimit && e > 0 ? this.leafCount = 0 : this.leafCount < 0 && 0 > e && (this.leafCount = this.leafLimit);
+        this.leafCount += e;
+        this.leafCount > this.leafLimit && e > 0 ? this.leafCount = 0 : this.leafCount < 0 && 0 > e && (this.leafCount = this.leafLimit);
         var n = Math.floor(this.leafCount / 2) + 1,
             i = this.collection[this.leafCount].route;
         t.go(a, {

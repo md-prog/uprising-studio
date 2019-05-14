@@ -1,3 +1,5 @@
+const _ = require('underscore')
+
 function e(e, t, n, i, r) {
     this.count = 0, this.update = function () {
         this.textures || (this.textures = e.data.sections.textures.items, this.collection = e.data.sections.collection, this.limit = this.collection.length - 1)
@@ -12,19 +14,28 @@ function e(e, t, n, i, r) {
                 page: s
             })
         }, this))
-    }, this.setState = function (t) {
-        this.count = _.indexOf(this.collection, e.currstate.model), this.setTextureState(t)
-    }, this.setTextureState = function (e) {
+    };
+    this.setState = function (t) {
+        this.count = _.indexOf(this.collection, e.currstate.model);
+        this.setTextureState(t)
+    };
+    this.setTextureState = function (e) {
         var t = this.textures[e.to.name];
         t && t.paused && !i.isMobile() && t.play()
-    }, this.clearTextureState = function () {
+    };
+    this.clearTextureState = function () {
         (e.data.projects.textures.loaded || e.currstate.to.data.type != r.PagesTypes.WALL) && _.each(this.textures, _.bind(function (t, n) {
             t.id == e.currstate.to.name || t.paused || i.isMobile() || t.pause()
         }, this))
-    }, this.clearState = function () {
+    };
+    this.clearState = function () {
         this.clearTextureState()
-    }, this.updatePage = function (e) {
-        this.count += e, this.count < 0 && (this.count = 0), this.count > this.limit && (this.count = this.limit), this.collection && t.go(this.collection[this.count].name)
+    };
+    this.updatePage = function (e) {
+        this.count += e;
+        this.count < 0 && (this.count = 0);
+        this.count > this.limit && (this.count = this.limit);
+        this.collection && t.go(this.collection[this.count].name)
     }
 }
 

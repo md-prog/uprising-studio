@@ -4,7 +4,7 @@ module.exports = {
     mode: "development", // "production" | "development" | "none"
 
     // Chosen mode tells webpack to use its built-in optimizations accordingly.
-    entry: "./src/app/application.js", // string | object | array
+    entry: "./client/app/application.js", // string | object | array
 
     // defaults to ./src
     // Here the application starts executing
@@ -36,7 +36,16 @@ module.exports = {
             // rules for modules (configure loaders, parser options, etc.)
             {
                 test: /\.jsx?$/,
-            }
+            },
+            {
+                test: /\.(html)$/,
+                use: {
+                  loader: 'html-loader',
+                  options: {
+                    minimize: true
+                  }
+                }
+              }
         ]
     },
     externals: [

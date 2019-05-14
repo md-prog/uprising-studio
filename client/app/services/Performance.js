@@ -55,7 +55,11 @@ function e() {
     }
 
     function r() {
-        c = !1, a.destroy(!0), s.destroy(), s = null, a = null
+        c = !1;
+        a.destroy(!0);
+        s.destroy();
+        s = null;
+        a = null
     }
     var s, a, o = i(),
         l = o,

@@ -45,5 +45,10 @@
     "resource-loader": "^2.2.4",
     "three": "^0.82.1",
     "underscore": "^1.8.3"
+  },
+  "devDependencies": {
+    "html-loader": "^0.5.5",
+    "webpack": "^4.31.0",
+    "webpack-cli": "^3.3.2"
   }
 }

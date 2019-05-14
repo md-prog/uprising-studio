@@ -1,3 +1,5 @@
+const _ = require('underscore')
+
 function e(e) {
     var t, n, i, r, s, a, o = Number.POSITIVE_INFINITY,
         l = Number.POSITIVE_INFINITY,
@@ -52,7 +54,7 @@ function t(e, t, n, i) {
         h = (m + v) / 2;
         d = (v + y) / 2;
         r = (a * u - o * c + d - h) / (a - o);
-        s = x > b ? a * (r - u) + h : o * (r - c) + ;
+        s = x > b ? a * (r - u) + h : o * (r - c) + d;
     }
 
     p = g - r,
@@ -89,7 +91,8 @@ function i(e, t, n) {
     l.push([0, o]);
     l.push([a / 2, o / 2]);
     l.forEach(_.bind(function (e) {
-        e[0] = s(e[0], 0, a), e[1] = s(e[1], 0, o)
+        e[0] = s(e[0], 0, a);
+        e[1] = s(e[1], 0, o)
     }, this));
     return l
 }
@@ -122,19 +125,36 @@ o = {
         if (3 > v) return [];
         if (i = i.slice(0), r)
             for (s = v; s--;) i[s] = i[s][r];
-        for (o = new Array(v), s = v; s--;) o[s] = s;
-        for (o.sort(function (e, t) {
-                return i[t][0] - i[e][0]
-            }), u = e(i), i.push(u[0], u[1], u[2]), c = [t(i, v + 0, v + 1, v + 2)], h = [], d = [], s = o.length; s--; d.length = 0) {
-            for (g = o[s], a = c.length; a--;) p = i[g][0] - c[a].x, p > 0 && p * p > c[a].r ? (h.push(c[a]), c.splice(a, 1)) : (f = i[g][1] - c[a].y, p * p + f * f - c[a].r > l || (d.push(c[a].i, c[a].j, c[a].j, c[a].k, c[a].k, c[a].i), c.splice(a, 1)));
-            for (n(d), a = d.length; a;) m = d[--a], $ = d[--a], c.push(t(i, $, m, g))
+        for (o = new Array(v), s = v; s--;)
+            o[s] = s;
+        o.sort(function (e, t) {
+            return i[t][0] - i[e][0]
+        });
+        u = e(i);
+        i.push(u[0], u[1], u[2]);
+        c = [t(i, v + 0, v + 1, v + 2)];
+        h = [];
+        d = [];
+        for (s = o.length; s--; d.length = 0) {
+            for (g = o[s], a = c.length; a--;) {
+                p = i[g][0] - c[a].x;
+                p > 0 && p * p > c[a].r ? (h.push(c[a]), c.splice(a, 1)) : (f = i[g][1] - c[a].y, p * p + f * f - c[a].r > l || (d.push(c[a].i, c[a].j, c[a].j, c[a].k, c[a].k, c[a].i), c.splice(a, 1)));
+            }
+            for (n(d), a = d.length; a;) {
+                m = d[--a];
+                $ = d[--a];
+                c.push(t(i, $, m, g))
+            }
         }
-        for (s = c.length; s--;) h.push(c[s]);
-        for (c.length = 0, s = h.length; s--;) h[s].i < v && h[s].j < v && h[s].k < v && c.push(h[s].i, h[s].j, h[s].k);
+        for (s = c.length; s--;)
+            h.push(c[s]);
+        for (c.length = 0, s = h.length; s--;)
+            h[s].i < v && h[s].j < v && h[s].k < v && c.push(h[s].i, h[s].j, h[s].k);
         return c
     },
     contains: function (e, t) {
-        if (t[0] < e[0][0] && t[0] < e[1][0] && t[0] < e[2][0] || t[0] > e[0][0] && t[0] > e[1][0] && t[0] > e[2][0] || t[1] < e[0][1] && t[1] < e[1][1] && t[1] < e[2][1] || t[1] > e[0][1] && t[1] > e[1][1] && t[1] > e[2][1]) return null;
+        if (t[0] < e[0][0] && t[0] < e[1][0] && t[0] < e[2][0] || t[0] > e[0][0] && t[0] > e[1][0] && t[0] > e[2][0] || t[1] < e[0][1] && t[1] < e[1][1] && t[1] < e[2][1] || t[1] > e[0][1] && t[1] > e[1][1] && t[1] > e[2][1])
+            return null;
         var n = e[1][0] - e[0][0],
             i = e[2][0] - e[0][0],
             r = e[1][1] - e[0][1],

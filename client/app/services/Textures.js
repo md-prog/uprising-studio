@@ -1,3 +1,5 @@
+const _ = require('underscore')
+
 function e(e, t, n, i) {
     function r(e, n, i) {
         return v = 0, h = t.defer(), g = n.length < 4 ? n.length : 4, d = i, c = n, m = e, $[e] = {}, p ? l(e, c, i) : s(), h.promise

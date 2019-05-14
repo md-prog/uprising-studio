@@ -1,3 +1,5 @@
+const _ = require('underscore')
+
 function e(e, t, n, i, r) {
     function s(i) {
         var r = new n;
@@ -10,20 +12,27 @@ function e(e, t, n, i, r) {
                 scene: new t(i, r),
                 active: !0
             }
-        }, m.menu.scene.render(), m.infos.scene.render(), g = i, a(), setTimeout(function () {
-            m.menu.active = !1, m.infos.active = !1
+        };
+        m.menu.scene.render();
+        m.infos.scene.render();
+        g = i, a();
+        setTimeout(function () {
+            m.menu.active = !1;
+            m.infos.active = !1
         }, 1e3)
     }
 
     function a() {
         var e = $(document);
         e.on(i.MOUSE_DOWN, _.bind(function (e) {
-            e.preventDefault(), o({
+            e.preventDefault();
+            o({
                 clientX: e.clientX,
                 clientY: e.clientY
             })
         }, this)), e.on(i.MOUSE_MOVE, _.bind(function (e) {
-            e.preventDefault(), l({
+            e.preventDefault();
+            l({
                 clientX: e.clientX,
                 clientY: e.clientY
             })
@@ -43,20 +52,24 @@ function e(e, t, n, i, r) {
                 clientY: e.touches[0].pageY
             }))
         }, this)), e.on(i.TOUCH_END, _.bind(function (e) {
-            e.preventDefault(), u(e)
+            e.preventDefault();
+            u(e)
         }, this))
     }
 
     function o(e) {
-        m.menu.active && m.menu.scene.onDown(e), m.infos.active && m.infos.scene.onDown(e)
+        m.menu.active && m.menu.scene.onDown(e);
+        m.infos.active && m.infos.scene.onDown(e)
     }
 
     function l(e) {
-        m.menu.active && m.menu.scene.onMove(e), m.infos.active && m.infos.scene.onMove(e)
+        m.menu.active && m.menu.scene.onMove(e);
+        m.infos.active && m.infos.scene.onMove(e)
     }
 
     function u(e) {
-        m.menu.active && m.menu.scene.onUp(e), m.infos.active && m.infos.scene.onUp(e)
+        m.menu.active && m.menu.scene.onUp(e);
+        m.infos.active && m.infos.scene.onUp(e)
     }
 
     function c() {

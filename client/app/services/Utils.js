@@ -3,7 +3,10 @@ module.exports = ["Performance", function (e) {
         getDpr: function () {
             var t = window.devicePixelRatio || 1,
                 n = e.get().index || 1;
-            return 0 > n && (t += 1), n >= 0 && 2 > n && (t = 1), this.isMobile() && (t = 1), Math.floor(t)
+            0 > n && (t += 1);
+            n >= 0 && 2 > n && (t = 1);
+            this.isMobile() && (t = 1);
+            return Math.floor(t)
         },
         getTime: function () {
             return Date.now() || (new Date).getTime()
@@ -39,7 +42,10 @@ module.exports = ["Performance", function (e) {
         isValidIE: function () {
             var e = !1,
                 t = navigator.userAgent;
-            return /MSIE 10/i.test(t) && (e = !1), (/MSIE 9/i.test(t) || /rv:11.0/i.test(t)) && (e = !1), /Edge\/\d./i.test(t) && (e = !0), e
+            /MSIE 10/i.test(t) && (e = !1);
+            (/MSIE 9/i.test(t) || /rv:11.0/i.test(t)) && (e = !1);
+            /Edge\/\d./i.test(t) && (e = !0);
+            return e
         }
     }
 }]

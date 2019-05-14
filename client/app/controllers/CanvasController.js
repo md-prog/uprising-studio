@@ -1,3 +1,5 @@
+const _ = require('underscore')
+
 function e(e, t, n, i, r, s, a, o, l, u, c, h, d, p, f, $, m, g, v, w, y, x, b, T, M) {
     var C, E, I, S, O, k, A, P, F, j = (r.getColors(), w),
         R = y,

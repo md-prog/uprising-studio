@@ -1,20 +1,26 @@
 function e(e, t, n) {
     function i(e, n, i) {
-        return o = t.defer(), l ? s(e, n, i) : r(e, n, i), o.promise
+        o = t.defer();
+        l ? s(e, n, i) : r(e, n, i);
+        return o.promise
     }
 
     function r(e, t, n) {
         var i = new createjs.LoadQueue(!1);
         i.on("progress", function (e) {
-            u = .5 * e.progress, n.call(null, u)
-        }), i.on("complete", function (i) {
+            u = .5 * e.progress;
+            n.call(null, u)
+        });
+        i.on("complete", function (i) {
             s(e, t, n)
-        }), i.loadManifest(a())
+        });
+        i.loadManifest(a())
     }
 
     function s(e, t, i) {
         n.load(e, t, function (e) {
-            u = l ? e : .5 + .5 * e, i.call(null, u)
+            u = l ? e : .5 + .5 * e;
+            i.call(null, u)
         }).then(function (e) {
             o.resolve(e)
         })

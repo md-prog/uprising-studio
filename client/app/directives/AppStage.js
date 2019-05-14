@@ -10,7 +10,8 @@ module.exports = [function () {
             s.get("swipe").set({
                 direction: Hammer.DIRECTION_ALL
             }), s.on("swipe", function (t) {
-                t.preventDefault(), e.$emit("swipe", t)
+                t.preventDefault();
+                e.$emit("swipe", t)
             }), e.setupCanvas(r)
         }
     }

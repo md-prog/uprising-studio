@@ -1,3 +1,5 @@
+const _ = require('underscore')
+
 function e(e) {
     function t() {
         var e;
@@ -59,7 +61,8 @@ function e(e) {
     }
 
     function o() {
-        l = !l, _.each(u, function (e) {
+        l = !l;
+        _.each(u, function (e) {
             _.each(e, function (e) {
                 e.player.paused || TweenMax.to(e.player, 1, {
                     volume: l ? 0 : 1,
