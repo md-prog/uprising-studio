@@ -19,12 +19,15 @@ module.exports = {
         publicPath: "/js/", // string
         // the url to the output directory resolved relative to the HTML page
     },
+    
+    watch: true,
+
     resolve: {
         // options for resolving module requests
         // (does not apply to resolving to loaders)
         modules: [
           "node_modules",
-          path.resolve(__dirname, "src")
+          path.resolve(__dirname, "client/app")
         ],
         // directories where to look for modules
         extensions: [".js", ".json", ".jsx", ".css"],
