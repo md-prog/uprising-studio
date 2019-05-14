@@ -43,7 +43,7 @@
     "requirejs": "^2.2.0",
     "requirejs-text": "^2.0.12",
     "resource-loader": "^2.2.4",
-    "three": "^0.104.0",
+    "three": "^0.82.1",
     "underscore": "^1.8.3"
   }
 }
