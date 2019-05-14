@@ -8,15 +8,31 @@ function e(e, t, n, i) {
     function s() {
         _.each(c, function (e) {
             var t = document.createElement("video");
-            t.appendChild(o(e.video)), t.preload = "auto", t.id = e.name, t.autoplay = !0, $[m][t.id] = t, f ? n(function () {
-                a(t)
-            }, 600) : t.addEventListener("canplay", a)
+            t.appendChild(o(e.video));
+            t.preload = "auto";
+            t.id = e.name;
+            t.autoplay = !0;
+            t.playsinline = !0;
+            t.muted = 'muted';
+            $[m][t.id] = t;
+            if (f)
+                n(function () {
+                    a(t)
+                }, 600)
+            else
+                t.addEventListener("canplay", a)
         })
     }
 
     function a(e) {
         var t = e.currentTarget || e;
-        t.width = t.videoWidth || 1280, t.height = t.videoHeight || 720, t.pause(), t.removeEventListener("canplay", a), ++v, g >= v && d.call(null, v / g), v == g && u()
+        t.width = t.videoWidth || 1280;
+        t.height = t.videoHeight || 720;
+        t.pause();
+        t.removeEventListener("canplay", a);
+        ++v;
+        g >= v && d.call(null, v / g);
+        v == g && u()
     }
 
     function o(e, t) {
