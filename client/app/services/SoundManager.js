@@ -24,7 +24,8 @@ function e(e) {
                 ease: Linear.easeNone,
                 onStart: function () {
                     u.menu.ambient.player.loop = !0;
-                    u.menu.ambient.player.paused && u.menu.ambient.player.play()
+                    var p;
+                    u.menu.ambient.player.paused && (p = u.menu.ambient.player.play()) && p.catch(function (er) {});
                 }
             })
         else
@@ -44,7 +45,8 @@ function e(e) {
                 ease: Linear.easeNone,
                 onStart: function () {
                     u.sections.ambient.player.loop = !0;
-                    u.sections.ambient.player.paused && u.sections.ambient.player.play()
+                    var p;
+                    u.sections.ambient.player.paused && (p = u.sections.ambient.player.play()) && (p.catch(function (er) {}))
                 }
             })
         else
@@ -62,7 +64,8 @@ function e(e) {
         if (i.paused || n) {
             i.currentTime = 0;
             i.volume = l ? 0 : 1;
-            i.play()
+            var p;
+            (p = i.play()) && (p.catch(function (er) {}))
         }
     }
 
