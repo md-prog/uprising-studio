@@ -211,7 +211,7 @@ module.exports = ["DisplayObject", "Text", "Math2", "Utils", "$q", "$timeout", "
         },
         hide: function () {
             var e = r.defer();
-            return new TimelineMax({
+            new TimelineMax({
                 tweens: [
                     TweenMax.allTo(this.$loaderShape.$points.children, .8, {
                         r: 0,
@@ -236,20 +236,49 @@ module.exports = ["DisplayObject", "Text", "Math2", "Utils", "$q", "$timeout", "
                 ],
                 onUpdate: _.bind(this.drawLines, this),
                 onComplete: _.bind(function () {
-                    e.resolve(), this.destroy()
+                    e.resolve();
+                    this.destroy()
                 }, this)
-            }), e.promise
+            });
+            return e.promise
         },
         resize: function (e) {
             var t = this.colors;
-            this.$base.clear(), this.$base.beginFill(t.grey), this.$base.drawRect(-e.x, -e.y, e.w, e.h), o.prototype.resize.call(this, e)
+            this.$base.clear();
+            this.$base.beginFill(t.grey);
+            this.$base.drawRect(-e.x, -e.y, e.w, e.h);
+            o.prototype.resize.call(this, e)
         },
         destroy: function () {
-            this.loop && this.loop.kill(), this.$base.destroy(), this.$text.destroy(), this.$loaderShape.destroy(!0), this.$loadedShape.destroy(!0), this.$mask.destroy(), this.$base = null, this.$text.$el = null, this.$loaderShape = null, this.$loadedShape = null, this.$mask = null, o.prototype.destroy.call(this)
+            this.loop && this.loop.kill();
+            this.$base.destroy();
+            this.$text.destroy();
+            this.$loaderShape.destroy(!0);
+            this.$loadedShape.destroy(!0);
+            this.$mask.destroy();
+            this.$base = null;
+            this.$text.$el = null;
+            this.$loaderShape = null;
+            this.$loadedShape = null;
+            this.$mask = null;
+            o.prototype.destroy.call(this)
         }
-    }), u.prototype.constructor = u, u.prototype = _.extend(Object.create(o.prototype), {
+    });
+    
+    u.prototype.constructor = u;
+    u.prototype = _.extend(Object.create(o.prototype), {
         render: function () {
-            return this.$dashline = new PIXI.Graphics, this.$dashMask = new PIXI.Graphics, this.$loadedLine = new PIXI.Graphics, this.$loadedLine.scale.y = 0, this.$dashline.mask = this.$dashMask, this.$dashMask.scale.y = 0, this.$el.addChild(this.$dashline), this.$el.addChild(this.$dashMask), this.$el.addChild(this.$loadedLine), this.checkForHelperLine(), this
+            this.$dashline = new PIXI.Graphics;
+            this.$dashMask = new PIXI.Graphics;
+            this.$loadedLine = new PIXI.Graphics;
+            this.$loadedLine.scale.y = 0;
+            this.$dashline.mask = this.$dashMask;
+            this.$dashMask.scale.y = 0;
+            this.$el.addChild(this.$dashline);
+            this.$el.addChild(this.$dashMask);
+            this.$el.addChild(this.$loadedLine);
+            this.checkForHelperLine();
+            return this
         },
         checkForHelperLine: function () {
             var e = this.scope.currstate,
@@ -267,7 +296,7 @@ module.exports = ["DisplayObject", "Text", "Math2", "Utils", "$q", "$timeout", "
         },
         hide: function () {
             var e = r.defer();
-            return new TimelineMax({
+            new TimelineMax({
                 tweens: [
                     TweenMax.to(this.$loadedLine.scale, 1, {
                         y: 0,
@@ -279,9 +308,12 @@ module.exports = ["DisplayObject", "Text", "Math2", "Utils", "$q", "$timeout", "
                     })
                 ],
                 onComplete: _.bind(function () {
-                    this.showHelperLine = !1, e.resolve(), this.destroy()
+                    this.showHelperLine = !1;
+                    e.resolve();
+                    this.destroy()
                 }, this)
-            }), e.promise
+            });
+            return e.promise
         },
         resize: function (e) {
             var t = this.colors,

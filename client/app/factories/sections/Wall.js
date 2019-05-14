@@ -218,20 +218,20 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
             this.removeEvents();
             this.isSideTween = !0;
             this.timer && a.cancel(this.timer);
-            this.scope.currstate.params.to.leaf == this.left.model.route && (
-                e.push(this.openSide(this.left, 1)),
-                e.push(this.closeSide(this.right, -1)), t = 1
-            );
-            this.scope.currstate.params.to.leaf == this.right.model.route && (
-                e.push(this.openSide(this.right, -1)),
-                e.push(this.closeSide(this.left, 1)), t = -1
-            );
-            e.push(
-                TweenMax.to(this.$dashline, 1.1, {
-                    x: this.scope.stagesize.x * t,
-                    ease: Expo.easeInOut
-                })
-            );
+            if (this.scope.currstate.params.to.leaf == this.left.model.route) {
+                e.push(this.openSide(this.left, 1));
+                e.push(this.closeSide(this.right, -1));
+                t = 1
+            }
+            if (this.scope.currstate.params.to.leaf == this.right.model.route) {
+                e.push(this.openSide(this.right, -1));
+                e.push(this.closeSide(this.left, 1));
+                t = -1
+            }
+            e.push(TweenMax.to(this.$dashline, 1.1, {
+                x: this.scope.stagesize.x * t,
+                ease: Expo.easeInOut
+            }));
             return new TimelineMax({
                 tweens: e,
                 onComplete: _.bind(function () {
@@ -245,20 +245,20 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
             this.isSideTween = !0;
             this.resize(this.scope.stagesize);
             this.timer = a(_.bind(this.loop, this), 1e3);
-            this.scope.currstate.params.from.leaf == this.left.model.route && (
-                e.push(this.reverseSideOpen(this.left, 1)),
-                e.push(this.reverseSideClose(this.right, -1)), t = 1
-            );
-            this.scope.currstate.params.from.leaf == this.right.model.route && (
-                e.push(this.reverseSideOpen(this.right, -1)),
-                e.push(this.reverseSideClose(this.left, 1)), t = -1
-            );
-            e.push(
-                TweenMax.from(this.$dashline, 1.1, {
-                    x: this.scope.stagesize.x * t,
-                    ease: Expo.easeInOut
-                })
-            )
+            if (this.scope.currstate.params.from.leaf == this.left.model.route) {
+                e.push(this.reverseSideOpen(this.left, 1));
+                e.push(this.reverseSideClose(this.right, -1));
+                t = 1
+            }
+            if (this.scope.currstate.params.from.leaf == this.right.model.route) {
+                e.push(this.reverseSideOpen(this.right, -1));
+                e.push(this.reverseSideClose(this.left, 1));
+                t = -1
+            }
+            e.push(TweenMax.from(this.$dashline, 1.1, {
+                x: this.scope.stagesize.x * t,
+                ease: Expo.easeInOut
+            }));
             return new TimelineMax({
                 tweens: e,
                 onComplete: _.bind(function () {
@@ -267,183 +267,237 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
             })
         },
         clearSides: function () {
-            this.removeEvents(), new TimelineMax({
-                tweens: [TweenMax.to(this.$dashline, .75, {
-                    x: 0,
-                    ease: Expo.easeOut
-                }), this.restoreSide(this.left, 1, .75), this.restoreSide(this.right, -1, .75)]
+            this.removeEvents();
+            new TimelineMax({
+                tweens: [
+                    TweenMax.to(this.$dashline, .75, {
+                        x: 0,
+                        ease: Expo.easeOut
+                    }),
+                    this.restoreSide(this.left, 1, .75),
+                    this.restoreSide(this.right, -1, .75)
+                ]
             })
         },
         showSide: function (e, t, n) {
             var i = [];
-            return e.isShow = !0, this.isSideShow = !0, i.push(TweenMax.to(e.$visual.$poster.filters[0], n, {
+            e.isShow = !0;
+            this.isSideShow = !0;
+            i.push(TweenMax.to(e.$visual.$poster.filters[0], n, {
                 gray: 0,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$visual.$poster.getChildAt(1), n, {
+            }));
+            i.push(TweenMax.to(e.$visual.$poster.getChildAt(1), n, {
                 alpha: 0,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$visual.$poster, n, {
+            }));
+            i.push(TweenMax.to(e.$visual.$poster, n, {
                 x: .25 * this.scope.stagesize.x * t,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$mask, n, {
+            }));
+            i.push(TweenMax.to(e.$mask, n, {
                 x: .25 * this.scope.stagesize.x * t,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$mask.scale, n, {
+            }));
+            i.push(TweenMax.to(e.$mask.scale, n, {
                 x: .75,
                 ease: Expo.easeOut
-            })), t > 0 && i.push(TweenMax.to(e.$caption.$el, n, {
+            }));
+            t > 0 && i.push(TweenMax.to(e.$caption.$el, n, {
                 x: this.scope.stagesize.x - e.$caption.height - 50,
                 ease: Expo.easeOut
-            })), new TimelineMax({
+            }));
+            return new TimelineMax({
                 tweens: i
             })
         },
         hideSide: function (e, t, n) {
             var i = [];
-            return e.isHide = !0, i.push(TweenMax.to(e.$visual.$poster.filters[0], n, {
+            e.isHide = !0;
+            i.push(TweenMax.to(e.$visual.$poster.filters[0], n, {
                 gray: 1,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$visual.$poster.getChildAt(1), n, {
+            }));
+            i.push(TweenMax.to(e.$visual.$poster.getChildAt(1), n, {
                 alpha: 1,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$visual.$poster, n, {
+            }));
+            i.push(TweenMax.to(e.$visual.$poster, n, {
                 x: .25 * -this.scope.stagesize.x * t,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$cta.$el, n, {
+            }));
+            i.push(TweenMax.to(e.$cta.$el, n, {
                 x: .5 * -this.scope.stagesize.x * t,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$mask, n, {
+            }));
+            i.push(TweenMax.to(e.$mask, n, {
                 x: .25 * -this.scope.stagesize.x * t,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$mask.scale, n, {
+            }));
+            i.push(TweenMax.to(e.$mask.scale, n, {
                 x: .25,
                 ease: Expo.easeOut
-            })), t > 0 && i.push(TweenMax.to(e.$caption.$el, n, {
+            }));
+            t > 0 && i.push(TweenMax.to(e.$caption.$el, n, {
                 x: -e.$caption.height - 50,
                 ease: Expo.easeOut
-            })), new TimelineMax({
+            }));
+            return new TimelineMax({
                 tweens: i,
                 stagger: 0
             })
         },
         openSide: function (e, t) {
             var n = [];
-            return n.push(TweenMax.to(e.$visual.$poster.filters[0], 1.1, {
+            n.push(TweenMax.to(e.$visual.$poster.filters[0], 1.1, {
                 gray: 0,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$visual.$poster.getChildAt(1), 1.1, {
+            }));
+            n.push(TweenMax.to(e.$visual.$poster.getChildAt(1), 1.1, {
                 alpha: 0,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$visual.$poster, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$visual.$poster, 1.1, {
                 x: .5 * this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$mask, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$mask, 1.1, {
                 x: .5 * this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$mask.scale, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$mask.scale, 1.1, {
                 x: 1,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$cta.$el, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$cta.$el, 1.1, {
                 alpha: 0,
                 ease: Expo.easeInOut
-            })), n.push(e.$caption.tweenOut()), new TimelineMax({
+            }));
+            n.push(e.$caption.tweenOut());
+            return new TimelineMax({
                 tweens: n
             })
         },
         closeSide: function (e, t) {
             var n = [];
-            return n.push(TweenMax.to(e.$visual.$poster, 1.1, {
+            n.push(TweenMax.to(e.$visual.$poster, 1.1, {
                 x: -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$mask, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$mask, 1.1, {
                 x: .5 * -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$cta.$el, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$cta.$el, 1.1, {
                 x: -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$caption.$el, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$caption.$el, 1.1, {
                 x: .5 * -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.to(e.$mask.scale, 1.1, {
+            }));
+            n.push(TweenMax.to(e.$mask.scale, 1.1, {
                 x: 0,
                 ease: Expo.easeInOut
-            })), new TimelineMax({
+            }));
+            return new TimelineMax({
                 tweens: n
             })
         },
         reverseSideOpen: function (e, t) {
             var n = [];
-            return n.push(TweenMax.fromTo(e.$visual.$poster.filters[0], 1.1, {
+            n.push(TweenMax.fromTo(e.$visual.$poster.filters[0], 1.1, {
                 gray: 0
             }, {
                 gray: 1,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.fromTo(e.$visual.$poster.getChildAt(1), 1.1, {
+            }));
+            n.push(TweenMax.fromTo(e.$visual.$poster.getChildAt(1), 1.1, {
                 alpha: 0
             }, {
                 alpha: 1,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$visual.$poster, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$visual.$poster, 1.1, {
                 x: .5 * this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$mask, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$mask, 1.1, {
                 x: .5 * this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$mask.scale, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$mask.scale, 1.1, {
                 x: 1,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$cta.$el, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$cta.$el, 1.1, {
                 alpha: 0,
                 ease: Expo.easeInOut
-            })), n.push(e.$caption.tweenIn()), new TimelineMax({
+            }));
+            n.push(e.$caption.tweenIn());
+            return new TimelineMax({
                 tweens: n
             })
         },
         reverseSideClose: function (e, t) {
             var n = [];
-            return n.push(TweenMax.from(e.$visual.$poster, 1.1, {
+            n.push(TweenMax.from(e.$visual.$poster, 1.1, {
                 x: -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$caption.$el, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$caption.$el, 1.1, {
                 x: .5 * -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$cta.$el, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$cta.$el, 1.1, {
                 x: -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$mask, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$mask, 1.1, {
                 x: .5 * -this.scope.stagesize.x * t,
                 ease: Expo.easeInOut
-            })), n.push(TweenMax.from(e.$mask.scale, 1.1, {
+            }));
+            n.push(TweenMax.from(e.$mask.scale, 1.1, {
                 x: 0,
                 ease: Expo.easeInOut
-            })), new TimelineMax({
+            }));
+            return new TimelineMax({
                 tweens: n
             })
         },
         restoreSide: function (e, t, n) {
             var i = [];
-            return e.isShow = !1, e.isHide = !1, i.push(TweenMax.to(e.$visual.$poster, n, {
+            e.isShow = !1;
+            e.isHide = !1;
+            i.push(TweenMax.to(e.$visual.$poster, n, {
                 x: 0,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$visual.$poster.filters[0], n, {
+            }));
+            i.push(TweenMax.to(e.$visual.$poster.filters[0], n, {
                 gray: 1,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$visual.$poster.getChildAt(1), n, {
+            }));
+            i.push(TweenMax.to(e.$visual.$poster.getChildAt(1), n, {
                 alpha: 1,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$cta.$el, n, {
+            }));
+            i.push(TweenMax.to(e.$cta.$el, n, {
                 x: 0,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$mask.scale, n, {
+            }));
+            i.push(TweenMax.to(e.$mask.scale, n, {
                 x: .5,
                 ease: Expo.easeOut
-            })), i.push(TweenMax.to(e.$mask, n, {
+            }));
+            i.push(TweenMax.to(e.$mask, n, {
                 x: 0,
                 ease: Expo.easeOut
-            })), t > 0 && i.push(TweenMax.to(e.$caption.$el, n, {
+            }));
+            t > 0 && i.push(TweenMax.to(e.$caption.$el, n, {
                 x: .5 * this.scope.stagesize.x - e.$caption.height - 50,
                 ease: Expo.easeOut
-            })), new TimelineMax({
+            }));
+            return new TimelineMax({
                 tweens: i,
                 onStart: _.bind(function () {
                     this.isSideShow = !1

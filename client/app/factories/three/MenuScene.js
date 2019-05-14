@@ -28,7 +28,8 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
         }
     }
 
-    r.prototype.constructor = r, r.prototype = _.extend(Object.create(e.prototype), {
+    r.prototype.constructor = r;
+    r.prototype = _.extend(Object.create(e.prototype), {
         render: function () {
             e.prototype.render.call(this);
             this.renderer.domElement.id = "menu";
@@ -150,18 +151,16 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
                 e.tasselized = !0;
                 TweenMax.killTweensOf(r);
                 t.play("menu", "iconshover", !0)
-            } else {
-                !n && e.tasselized && (
-                    e.tasselized = !1,
-                    TweenMax.killTweensOf(r),
-                    TweenMax.to(r, 1, {
-                        endArray: i.data.oVertices,
-                        ease: Cubic.easeOut,
-                        onUpdate: function () {
-                            i.geometry.attributes.position.needsUpdate = !0
-                        }
-                    })
-                )
+            } else if(!n && e.tasselized ) {
+                e.tasselized = !1,
+                TweenMax.killTweensOf(r),
+                TweenMax.to(r, 1, {
+                    endArray: i.data.oVertices,
+                    ease: Cubic.easeOut,
+                    onUpdate: function () {
+                        i.geometry.attributes.position.needsUpdate = !0
+                    }
+                })
             }
         },
         getIntersects: function (e, t) {
@@ -216,11 +215,16 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
             l.verticesNeedUpdate = !0
         },
         updateIcons: function () {
-            for (var e, t, i, r, s, a, o, l, u, c = this.drag && !this.prevent ? 250 : 320, h = {
+            var e, t, i, r, s, a, o, l, u,
+                c = this.drag && !this.prevent ? 250 : 320, h = {
                     x: 0,
                     y: -30,
                     z: 5e3
-                }, d = this.menuicons.children, p = 2 * Math.PI / 4, f = d.length, $ = f - 1; $ >= 0; --$) {
+                },
+                d = this.menuicons.children,
+                p = 2 * Math.PI / 4,
+                f = d.length;
+            for (var $ = f - 1; $ >= 0; --$) {
                 r = d[$];
                 s = r.children[0];
                 a = s.children[0];

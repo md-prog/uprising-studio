@@ -14,6 +14,7 @@ module.exports = ["DisplayObject", function (e) {
         this.height = 0;
         this.render()
     }
+
     t.prototype.constructor = t;
     t.prototype = _.extend(Object.create(e.prototype), {
         render: function () {
@@ -36,19 +37,25 @@ module.exports = ["DisplayObject", function (e) {
                         padding: a,
                         align: "left"
                     });
+                    e = n.width - 2 * a;
+                    t = n.height + a / 1.325;
+                    n.y = a;
+                    n.x = 0;
+                    i.addChild(n);
+                    this.$el.addChild(i);
+                    this.tmpwidth += e * o + this.spacing;
                 }
-                e = n.width - 2 * a;
-                t = n.height + a / 1.325;
-                n.y = a;
-                n.x = 0;
-                i.addChild(n);
-                this.$el.addChild(i);
-                this.tmpwidth += e * o + this.spacing;
-                s.length > 1 && (this.tmpheight = Math.round(t / this.getLineHeight() * (u + 1) * o), this.tmpwidth = 0)
+                if(s.length > 1) {
+                    this.tmpheight = Math.round(t / this.getLineHeight() * (u + 1) * o);
+                    this.tmpwidth = 0
+                }
             }, this);
             this.width = Math.round(this.tmpwidth - this.spacing);
             this.height = Math.round(t * o);
-            s.length > 1 && (this.width = 520, this.height = Math.round(this.tmpheight - 9));
+            if(s.length > 1) {
+                this.width = 520;
+                this.height = Math.round(this.tmpheight - 9)
+            }
             return this
         },
         text: function (e) {
