@@ -46,32 +46,50 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils
             this.$visual && this.$visual.update()
         },
         tweenIn: function () {
-            return r.isPhone() ? e.prototype.tweenIn.call(this) : new TimelineMax({
-                tweens: []
-            })
+            if (r.isPhone())
+                e.prototype.tweenIn.call(this)
+            else
+                new TimelineMax({
+                    tweens: []
+                })
         },
         tweenOut: function () {
-            return this.removeEvents(), r.isPhone() ? e.prototype.tweenOut.call(this) : new TimelineMax({
-                tweens: [TweenMax.set(this.$background, {
-                    alpha: 0
-                }), TweenMax.set(this.$visual.$el, {
-                    alpha: 0
-                }), this.$caption.tweenOutWithSlide(1)]
-            })
+            this.removeEvents()
+            if (r.isPhone())
+                return e.prototype.tweenOut.call(this)
+            else
+                return new TimelineMax({
+                    tweens: [
+                        TweenMax.set(this.$background, {
+                            alpha: 0
+                        }),
+                        TweenMax.set(this.$visual.$el, {
+                            alpha: 0
+                        }),
+                        this.$caption.tweenOutWithSlide(1)
+                    ]
+                })
         },
         tweenInWithSlide: function () {
             this.resize(this.scope.stagesize), t.play("projects", "leaf", !0);
             var e = this.scope.currstate.params.to.dir || 1;
             return new TimelineMax({
-                tweens: [new TimelineMax({
-                    tweens: [TweenMax.from(this.$mask, 1.4, {
-                        x: this.scope.stagesize.w * e,
-                        ease: Expo.easeInOut
-                    }), TweenMax.from(this.$mask.scale, 1.4, {
-                        x: .6,
-                        ease: Expo.easeInOut
-                    }), this.$visual.tweenInWithSlide(e)]
-                }), this.$caption.tweenInWithSlide(e)],
+                tweens: [
+                    new TimelineMax({
+                        tweens: [
+                            TweenMax.from(this.$mask, 1.4, {
+                                x: this.scope.stagesize.w * e,
+                                ease: Expo.easeInOut
+                            }),
+                            TweenMax.from(this.$mask.scale, 1.4, {
+                                x: .6,
+                                ease: Expo.easeInOut
+                            }),
+                            this.$visual.tweenInWithSlide(e)
+                        ]
+                    }),
+                    this.$caption.tweenInWithSlide(e)
+                ],
                 stagger: .4
             })
         },

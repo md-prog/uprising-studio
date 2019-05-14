@@ -1,3 +1,5 @@
+const _ = require('underscore')
+
 function e(e, t, n) {
     n.html5Mode(!0);
     t.otherwise(function (e, t) {
