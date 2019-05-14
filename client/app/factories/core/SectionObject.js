@@ -1,8 +1,8 @@
 const _ = require('underscore')
 
-module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "SoundManager", "Math2", "Events", "Utils", "$timeout", function (e, t, n, i, r, s, a, o, l, u) {
+module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "SoundManager", "Math2", "Events", "Utils", "$timeout", function (ContainerObject, Text, Poster, Copy, Maincta, SoundManager, Math2, Events, Utils, $timeout) {
     function c(t, n) {
-        e.call(this, t, n);
+        ContainerObject.call(this, t, n);
         this.tweener = {
             value: 0
         };
@@ -11,41 +11,41 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
     }
 
     c.prototype.constructor = c;
-    c.prototype = _.extend(Object.create(e.prototype), {
+    c.prototype = _.extend(Object.create(ContainerObject.prototype), {
         render: function () {
-            e.prototype.render.call(this);
+            ContainerObject.prototype.render.call(this);
             var s = this.colors,
                 a = "work" == this.model.name ? 250 : 200;
 
             this.texStore = this.scope.data.sections.textures;
             this.$texture = this.getTexture(this.model);
-            this.$poster = new n(this.$texture);
+            this.$poster = new Poster(this.$texture);
             this.$wrapper = new PIXI.Sprite;
-            this.$head = new t(this.model.head.toUpperCase(), {
+            this.$head = new Text(this.model.head.toUpperCase(), {
                 fontFamily: "din-condensed-web",
                 fontSize: 18,
                 fill: s.white,
                 letterSpacing: .5
             });
-            this.$copyline = new i(this.model.copylines, {
+            this.$copyline = new Copy(this.model.copylines, {
                 fontFamily: "timmons",
                 fontSize: a,
                 fill: s.green,
                 letterSpacing: 20
             });
-            this.$subtitle = new t(this.model.subtitle.toUpperCase(), {
+            this.$subtitle = new Text(this.model.subtitle.toUpperCase(), {
                 fontFamily: "din-condensed-web",
                 fontSize: 32,
                 fill: s.white,
                 letterSpacing: .5
             });
-            this.$description = new t(this.model.description.toUpperCase(), {
+            this.$description = new Text(this.model.description.toUpperCase(), {
                 fontFamily: "montser-reg",
                 fontSize: 9,
                 fill: s.white,
                 letterSpacing: 0
             });
-            this.$cta = new r(this.model.cta.toUpperCase());
+            this.$cta = new Maincta(this.model.cta.toUpperCase());
             this.$topLine = new PIXI.Graphics;
             this.$botLine = new PIXI.Graphics;
             this.$wrapper.addChild(this.$topLine);
@@ -58,7 +58,7 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
             this.$el.addChild(this.$poster.render().$el);
             this.$el.addChild(this.$wrapper);
             this.filter = new PIXI.filters.GlitchFilter;
-            this.filter.resolution = l.getDpr();
+            this.filter.resolution = Utils.getDpr();
             this.filter.padding = 0;
             this.filter.seed = 0;
             this.addEvents();
@@ -67,15 +67,15 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
         },
         addEvents: function () {
             this.$cta.$el.click = this.$cta.$el.tap = _.bind(function (e) {
-                this.scope.$emit(o.OPEN_PAGE)
+                this.scope.$emit(Events.OPEN_PAGE)
             }, this)
         },
         update: function () {
-            e.prototype.update.call(this);
+            ContainerObject.prototype.update.call(this);
             this.$poster && this.$poster.update()
         },
         tweenIn: function () {
-            this.timer = u(_.bind(this.loop, this), 3e3);
+            this.timer = $timeout(_.bind(this.loop, this), 3e3);
             this.timeline = new TimelineMax({
                 tweens: [
                     TweenMax.to(this.$el, .125, {
@@ -132,12 +132,12 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
                 ],
                 stagger: .125
             });
-            s.play("sections", "tweenIn", !0);
+            SoundManager.play("sections", "tweenIn", !0);
             return this.timeline
         },
         tweenOut: function () {
             this.removeEvents();
-            this.timer && u.cancel(this.timer);
+            this.timer && $timeout.cancel(this.timer);
             this.timeline = new TimelineMax({
                 tweens: [
                     this.$cta.tweenOut(),
@@ -168,7 +168,7 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
         tweenInFromMenu: function () {
             var e = this.scope.stagesize.x * -.5;
             this.scope.stagesize.y * -.5;
-            return this.$poster.$video.alpha = 1, this.timer = u(_.bind(this.loop, this), 3e3), new TimelineMax({
+            return this.$poster.$video.alpha = 1, this.timer = $timeout(_.bind(this.loop, this), 3e3), new TimelineMax({
                 tweens: [
                     new TimelineMax({
                         tweens: [TweenMax.from(this.$poster.$el.scale, 1.5, {
@@ -196,7 +196,7 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
             })
         },
         tweenOutToMenu: function () {
-            this.removeEvents(), this.timer && u.cancel(this.timer);
+            this.removeEvents(), this.timer && $timeout.cancel(this.timer);
             var e = this.scope.stagesize.x * -.5,
                 t = this.scope.stagesize.y * -.5;
             return new TimelineMax({
@@ -217,7 +217,7 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
         },
         tweenOutToPage: function () {
             this.removeEvents();
-            this.timer && u.cancel(this.timer);
+            this.timer && $timeout.cancel(this.timer);
             this.timeline = new TimelineMax({
                 tweens: [
                     this.$poster.tweenOutToPage(),
@@ -242,11 +242,11 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
                 }, this),
                 onUpdate: _.bind(this.generateGlitch, this)
             });
-            s.play("sections", "tweenOut", !0);
+            SoundManager.play("sections", "tweenOut", !0);
             return this.timeline
         },
         loop: function () {
-            s.play("sections", "copyloop", !0);
+            SoundManager.play("sections", "copyloop", !0);
             this.tweener.value = this.$copyline.width;
             this.loopTimeline = new TimelineMax({
                 tweens: [
@@ -265,19 +265,19 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
                     })
                 ]
             });
-            this.timer = u(_.bind(this.loop, this), 1e3 * this.repeatDelay)
+            this.timer = $timeout(_.bind(this.loop, this), 1e3 * this.repeatDelay)
         },
         generateGlitch: function () {
             this.filter.byp = 0;
             this.filter.amount = Math.random() / 60;
-            this.filter.angle = a.randFloat(-Math.PI, Math.PI);
-            this.filter.distortionX = a.randFloat(0, 1);
-            this.filter.distortionY = a.randFloat(0, 1);
-            this.filter.seedX = a.randFloat(-.5, .5);
-            this.filter.seedY = a.randFloat(-.5, .5)
+            this.filter.angle = Math2.randFloat(-Math.PI, Math.PI);
+            this.filter.distortionX = Math2.randFloat(0, 1);
+            this.filter.distortionY = Math2.randFloat(0, 1);
+            this.filter.seedX = Math2.randFloat(-.5, .5);
+            this.filter.seedY = Math2.randFloat(-.5, .5)
         },
         resize: function (t) {
-            e.prototype.resize.call(this, t);
+            ContainerObject.prototype.resize.call(this, t);
             this.deafultResize(t);
             t.w < 768 && this.phoneResize(t);
             this.$el.x = this.$el.y = 0
@@ -363,7 +363,7 @@ module.exports = ["ContainerObject", "Text", "Poster", "Copy", "Maincta", "Sound
             this.tweener = null;
             this.$cta = null;
             this.$texture = null;
-            e.prototype.destroy.call(this)
+            ContainerObject.prototype.destroy.call(this)
         }
     })
     return c

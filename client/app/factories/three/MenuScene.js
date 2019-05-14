@@ -120,7 +120,9 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
             }
         },
         onUp: function (e) {
-            if (this.drag = !1, this.prevent || (this.scope.$emit(i.HOLD_END), this.toggleZoom(!1)), this.intersectsCount > 0) {
+            this.drag = !1;
+            this.prevent || (this.scope.$emit(i.HOLD_END), this.toggleZoom(!1));
+            if (this.intersectsCount > 0) {
                 var t = this.scope.data.sections.collection[this.selectIcon.index];
                 this.scope.$emit(i.CLICK_MENU, t)
             }
@@ -216,7 +218,8 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
         },
         updateIcons: function () {
             var e, t, i, r, s, a, o, l, u,
-                c = this.drag && !this.prevent ? 250 : 320, h = {
+                c = this.drag && !this.prevent ? 250 : 320,
+                h = {
                     x: 0,
                     y: -30,
                     z: 5e3

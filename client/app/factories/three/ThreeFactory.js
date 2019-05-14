@@ -7,7 +7,11 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
             s = new THREE.CubeTextureLoader,
             a = "img/envmap/",
             o = ".jpg",
-            l = [a + "px" + o, a + "nx" + o, a + "py" + o, a + "ny" + o, a + "pz" + o, a + "nz" + o],
+            l = [
+                a + "px" + o, a + "nx" + o,
+                a + "py" + o, a + "ny" + o,
+                a + "pz" + o, a + "nz" + o
+            ],
             u = s.load(l);
         u.format = THREE.RGBFormat;
         return {
@@ -117,16 +121,14 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                                     transparent: !0,
                                     opacity: 0,
                                     wireframe: !1
-                                })
-                            ),
+                                })),
                             u = new THREE.Mesh(
                                 new THREE.PlaneGeometry(64, 16),
                                 new THREE.MeshBasicMaterial({
                                     map: n.load(s.label),
                                     transparent: !0,
                                     wireframe: !1
-                                })
-                            );
+                                }));
                         u.position.x = s.labelpos.x;
                         u.position.y = s.labelpos.y;
                         u.position.z = 1;
@@ -146,8 +148,9 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                     n = "img/meshes/team.obj",
                     r = new THREE.Object3D,
                     s = new THREE.OBJLoader;
-                return s.load(e, _.bind(function (e) {
-                    e.castShadow = !1, e.traverse(_.bind(function (e) {
+                s.load(e, _.bind(function (e) {
+                    e.castShadow = !1;
+                    e.traverse(_.bind(function (e) {
                         if (e instanceof THREE.Mesh) {
                             var n = (new THREE.Geometry).fromBufferGeometry(e.geometry);
                             e.material = new THREE.MeshStandardMaterial({
@@ -158,26 +161,34 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                                 envMapIntensity: 5,
                                 envMap: u,
                                 shading: THREE.FlatShading
-                            }), n.mergeVertices(), e.geometry = n
+                            });
+                            n.mergeVertices();
+                            e.geometry = n
                         }
-                    }, this)), r.add(e)
-                }, this)), s.load(n, _.bind(function (e) {
-                    e.castShadow = !1, e.traverse(_.bind(function (e) {
+                    }, this));
+                    r.add(e)
+                }, this));
+                s.load(n, _.bind(function (e) {
+                    e.castShadow = !1;
+                    e.traverse(_.bind(function (e) {
                         if (e instanceof THREE.Mesh) {
                             var t = (new THREE.Geometry).fromBufferGeometry(e.geometry);
-                            t.mergeVertices(), e.geometry = t, e.waves = [];
-                            for (var n = 0; n < e.geometry.vertices.length; ++n) e.waves.push({
-                                amplitude: {
-                                    x: i.randFloat(-10, 10),
-                                    y: i.randFloat(-10, 10),
-                                    z: i.randFloat(-10, 10)
-                                },
-                                period: {
-                                    x: i.randFloat(100, 200),
-                                    y: i.randFloat(100, 200),
-                                    z: i.randFloat(100, 200)
-                                }
-                            });
+                            t.mergeVertices();
+                            e.geometry = t;
+                            e.waves = [];
+                            for (var n = 0; n < e.geometry.vertices.length; ++n)
+                                e.waves.push({
+                                    amplitude: {
+                                        x: i.randFloat(-10, 10),
+                                        y: i.randFloat(-10, 10),
+                                        z: i.randFloat(-10, 10)
+                                    },
+                                    period: {
+                                        x: i.randFloat(100, 200),
+                                        y: i.randFloat(100, 200),
+                                        z: i.randFloat(100, 200)
+                                    }
+                                });
                             var s = THREE.UniformsUtils.merge([THREE.ShaderLib.phong.uniforms, {
                                     angle: {
                                         type: "f",
@@ -196,40 +207,90 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                                     lights: !0,
                                     fog: !0
                                 });
-                            a.envMap = u, e.material = a, r.group = e
+                            a.envMap = u;
+                            e.material = a;
+                            r.group = e
                         }
-                    }, this)), r.add(e)
-                }, this)), r.rotation.x = i.degToRad(148), r
+                    }, this));
+                    r.add(e)
+                }, this));
+                r.rotation.x = i.degToRad(148);
+                return r
             },
             getParticles: function (e) {
-                for (var t, n, s = new THREE.Object3D, a = e.particles, o = new THREE.Geometry, l = new THREE.Matrix4, u = {
+                var t, n,
+                    s = new THREE.Object3D,
+                    a = e.particles,
+                    o = new THREE.Geometry,
+                    l = new THREE.Matrix4,
+                    u = {
                         positions: [],
                         rotations: [],
                         amplitude: [],
                         period: []
-                    }, c = 0; a > c; ++c) t = new THREE.SphereGeometry(6, 4, 4, 0, 2 * Math.PI, 0, 2 * Math.PI), u.positions.push({
-                    radius: i.randFloat(e.radius.min, e.radius.max),
-                    height: i.randFloat(e.height.min, e.height.max),
-                    scale: i.randFloat(.5, 1.5)
-                }), u.rotations.push({
-                    speed: i.randFloat(.075, .75),
-                    angle: i.randFloat(0, 2 * Math.PI)
-                }), u.amplitude.push({
-                    x: i.randFloat(-40, 40),
-                    y: i.randFloat(-75, 75),
-                    z: i.randFloat(-60, 60)
-                }), u.period.push({
-                    x: i.randFloat(300, 400),
-                    y: i.randFloat(200, 300),
-                    z: i.randFloat(400, 500)
-                }), l.makeRotationX(i.randFloat(2 * -Math.PI, 2 * Math.PI)), l.makeRotationY(i.randFloat(2 * -Math.PI, 2 * Math.PI)), l.makeRotationZ(i.randFloat(2 * -Math.PI, 2 * Math.PI)), o.merge(t, l);
-                for (var h = (new THREE.BufferGeometry).fromGeometry(o), d = h.attributes.position.array.length, p = new THREE.Color, f = new Float32Array(d), $ = new Float32Array(d), m = new Float32Array(d), g = new Float32Array(d), v = new Float32Array(d), w = 0, y = 0, c = 0; d > c; c += 24)
+                    };
+                for (var c = 0; a > c; ++c) {
+                    t = new THREE.SphereGeometry(6, 4, 4, 0, 2 * Math.PI, 0, 2 * Math.PI);
+                    u.positions.push({
+                        radius: i.randFloat(e.radius.min, e.radius.max),
+                        height: i.randFloat(e.height.min, e.height.max),
+                        scale: i.randFloat(.5, 1.5)
+                    });
+                    u.rotations.push({
+                        speed: i.randFloat(.075, .75),
+                        angle: i.randFloat(0, 2 * Math.PI)
+                    });
+                    u.amplitude.push({
+                        x: i.randFloat(-40, 40),
+                        y: i.randFloat(-75, 75),
+                        z: i.randFloat(-60, 60)
+                    });
+                    u.period.push({
+                        x: i.randFloat(300, 400),
+                        y: i.randFloat(200, 300),
+                        z: i.randFloat(400, 500)
+                    });
+                    l.makeRotationX(i.randFloat(2 * -Math.PI, 2 * Math.PI));
+                    l.makeRotationY(i.randFloat(2 * -Math.PI, 2 * Math.PI));
+                    l.makeRotationZ(i.randFloat(2 * -Math.PI, 2 * Math.PI));
+                    o.merge(t, l);
+                }
+                var h = (new THREE.BufferGeometry).fromGeometry(o),
+                    d = h.attributes.position.array.length,
+                    p = new THREE.Color,
+                    f = new Float32Array(d),
+                    $ = new Float32Array(d),
+                    m = new Float32Array(d),
+                    g = new Float32Array(d),
+                    v = new Float32Array(d),
+                    w = 0,
+                    y = 0;
+                for (var c = 0; d > c; c += 24)
                     for (var x = 0; 24 > x; x += 3) {
-                        w = c + x, y = Math.floor(w / 216), $[w + 0] = u.positions[y].radius, $[w + 1] = u.positions[y].height, $[w + 2] = u.positions[y].scale, m[w + 0] = u.rotations[y].angle, m[w + 1] = u.rotations[y].speed, m[w + 2] = u.rotations[y].center, g[w + 0] = u.amplitude[y].x, g[w + 1] = u.amplitude[y].y, g[w + 2] = u.amplitude[y].z, v[w + 0] = u.period[y].x, v[w + 1] = u.period[y].y, v[w + 2] = u.period[y].z;
+                        w = c + x;
+                        y = Math.floor(w / 216);
+                        $[w + 0] = u.positions[y].radius;
+                        $[w + 1] = u.positions[y].height;
+                        $[w + 2] = u.positions[y].scale;
+                        m[w + 0] = u.rotations[y].angle;
+                        m[w + 1] = u.rotations[y].speed;
+                        m[w + 2] = u.rotations[y].center;
+                        g[w + 0] = u.amplitude[y].x;
+                        g[w + 1] = u.amplitude[y].y;
+                        g[w + 2] = u.amplitude[y].z;
+                        v[w + 0] = u.period[y].x;
+                        v[w + 1] = u.period[y].y;
+                        v[w + 2] = u.period[y].z;
                         var p = new THREE.Color(y % 2 == 0 ? r.green : r.grey3);
-                        f[w + 0] = p.r, f[w + 1] = p.g, f[w + 2] = p.b
+                        f[w + 0] = p.r;
+                        f[w + 1] = p.g;
+                        f[w + 2] = p.b
                     }
-                h.addAttribute("vPosition", new THREE.BufferAttribute($, 3)), h.addAttribute("vRotation", new THREE.BufferAttribute(m, 3)), h.addAttribute("vAmplitude", new THREE.BufferAttribute(g, 3)), h.addAttribute("vPeriod", new THREE.BufferAttribute(v, 3)), h.addAttribute("cColor", new THREE.BufferAttribute(f, 3));
+                h.addAttribute("vPosition", new THREE.BufferAttribute($, 3));
+                h.addAttribute("vRotation", new THREE.BufferAttribute(m, 3));
+                h.addAttribute("vAmplitude", new THREE.BufferAttribute(g, 3));
+                h.addAttribute("vPeriod", new THREE.BufferAttribute(v, 3));
+                h.addAttribute("cColor", new THREE.BufferAttribute(f, 3));
                 var b = THREE.UniformsUtils.merge([THREE.ShaderLib.phong.uniforms, {
                         angle: {
                             type: "f",
@@ -248,7 +309,9 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                         lights: !0,
                         fog: !0
                     });
-                return n = new THREE.Mesh(h, T), s.add(n), s
+                n = new THREE.Mesh(h, T);
+                s.add(n);
+                return s
             },
             getPayoffsMesh: function () {
                 var e = new THREE.Object3D,
@@ -342,7 +405,7 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                             y: 1
                         }
                     }];
-                return _.each(n, function (n, i) {
+                _.each(n, function (n, i) {
                     var s = new THREE.Object3D,
                         a = new THREE.Mesh(new THREE.PlaneGeometry(74, 3), new THREE.MeshBasicMaterial({
                             color: r.white,
@@ -353,14 +416,28 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                             transparent: !0,
                             wireframe: !1
                         }));
-                    a.position.x = -27, a.position.y = 15, a.position.z = 5, s.rotation.y = 0, s.position.x = n.position.x, s.position.y = n.position.y, s.position.z = n.position.z, s.scale.x = n.scale.x, s.scale.y = n.scale.y, s.add(a), s.add(o), e.add(s)
-                }, this), e
+                    a.position.x = -27;
+                    a.position.y = 15;
+                    a.position.z = 5;
+                    s.rotation.y = 0;
+                    s.position.x = n.position.x;
+                    s.position.y = n.position.y;
+                    s.position.z = n.position.z;
+                    s.scale.x = n.scale.x;
+                    s.scale.y = n.scale.y;
+                    s.add(a);
+                    s.add(o);
+                    e.add(s)
+                }, this);
+                return e
             },
             getLogoMesh: function () {
                 var e = new THREE.Object3D,
                     n = new THREE.OBJLoader;
-                return n.load("img/meshes/uprising-logo.obj", _.bind(function (n) {
-                    n.position.x = -50, n.castShadow = !1, n.traverse(_.bind(function (e) {
+                n.load("img/meshes/uprising-logo.obj", _.bind(function (n) {
+                    n.position.x = -50;
+                    n.castShadow = !1;
+                    n.traverse(_.bind(function (e) {
                         if (e instanceof THREE.Mesh) {
                             var n = (new THREE.Geometry).fromBufferGeometry(e.geometry);
                             e.material = new THREE.MeshPhongMaterial({
@@ -370,10 +447,14 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                                 reflectivity: .25,
                                 shininess: 30,
                                 wireframe: t
-                            }), n.mergeVertices(), e.geometry = n
+                            });
+                            n.mergeVertices();
+                            e.geometry = n
                         }
-                    }, this)), e.add(n)
-                }, this)), e
+                    }, this));
+                    e.add(n)
+                }, this))
+                return e
             },
             getLights: function () {
                 var e = new THREE.AmbientLight(r.white, .5),
@@ -441,7 +522,8 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                                 y: i.randFloat(200, 300),
                                 z: i.randFloat(250, 350)
                             }
-                        }, ++m
+                        };
+                        ++m
                     }
                 f.receiveShadow = !0;
                 f.receiveShadow = !0;
@@ -462,7 +544,8 @@ module.exports = ["TerrainGeneration", "Performance", "Utils", "Math2", function
                         s.vertices[a].z = r[o][l] + i.randFloat(-100, 200);
                         a++;
                     }
-                return s.mergeVertices(), s
+                s.mergeVertices();
+                return s
             },
             getRoomMesh: function () {
                 var e = ".jpg",

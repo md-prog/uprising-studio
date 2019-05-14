@@ -1,8 +1,8 @@
 const _ = require('underscore');
 
-module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs", "Events", "$timeout", function (e, t, n, i, r, s, a) {
+module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs", "Events", "$timeout", function (ContainerObject, SoundManager, Visual, Leafcta, Specs, Events, $timeout) {
     function o(t) {
-        e.call(this, t);
+        ContainerObject.call(this, t);
         this.isRowsTween = !1;
         this.isSideTween = !1;
         this.isSideShow = !1;
@@ -11,26 +11,26 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
     }
 
     o.prototype.constructor = o;
-    o.prototype = _.extend(Object.create(e.prototype), {
+    o.prototype = _.extend(Object.create(ContainerObject.prototype), {
         render: function () {
-            e.prototype.render.call(this);
+            ContainerObject.prototype.render.call(this);
             this.collection = this.scope.data.projects.collection;
             this.texStore = this.scope.data.projects.textures;
             this.left = {};
             this.left.model = this.collection[this.getSides().left];
             this.left.$texture = this.getTexture(this.left.model);
-            this.left.$visual = new n(this.left.model, this.left.$texture, 1);
-            this.left.$cta = new i("view project".toUpperCase(), 1);
-            this.left.$caption = new r(this.left.model);
+            this.left.$visual = new Visual(this.left.model, this.left.$texture, 1);
+            this.left.$cta = new Leafcta("view project".toUpperCase(), 1);
+            this.left.$caption = new Specs(this.left.model);
             this.left.$mask = new PIXI.Graphics;
             this.left.$wrap = new PIXI.Sprite;
             this.left.$el = new PIXI.Sprite;
             this.right = {};
             this.right.model = this.collection[this.getSides().right];
             this.right.$texture = this.getTexture(this.right.model);
-            this.right.$visual = new n(this.right.model, this.right.$texture, -1);
-            this.right.$cta = new i("view project".toUpperCase(), -1);
-            this.right.$caption = new r(this.right.model);
+            this.right.$visual = new Visual(this.right.model, this.right.$texture, -1);
+            this.right.$cta = new Leafcta("view project".toUpperCase(), -1);
+            this.right.$caption = new Specs(this.right.model);
             this.right.$mask = new PIXI.Graphics;
             this.right.$wrap = new PIXI.Sprite;
             this.right.$el = new PIXI.Sprite;
@@ -100,7 +100,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
                 })
             }, this);
             this.left.$cta.$el.click = this.left.$cta.$el.tap = _.bind(function () {
-                this.scope.$emit(s.OPEN_LEAF, this.left.model)
+                this.scope.$emit(Events.OPEN_LEAF, this.left.model)
             }, this);
             this.right.$cta.$el.mouseover = _.bind(function () {
                 this.isRowsTween || new TimelineMax({
@@ -129,7 +129,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
                 })
             }, this);
             this.right.$cta.$el.click = this.right.$cta.$el.tap = _.bind(function () {
-                this.scope.$emit(s.OPEN_LEAF, this.right.model)
+                this.scope.$emit(Events.OPEN_LEAF, this.right.model)
             }, this)
         },
         update: function () {
@@ -137,17 +137,18 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
             this.right.$visual && this.right.$visual.update()
         },
         tweenIn: function () {
-            this.timer = a(_.bind(this.loop, this), 1e3);
-            return e.prototype.tweenIn.call(this)
+            this.timer = $timeout(_.bind(this.loop, this), 1e3);
+            return ContainerObject.prototype.tweenIn.call(this)
         },
         tweenOut: function () {
-            this.timer && a.cancel(this.timer);
-            return e.prototype.tweenOut.call(this)
+            this.timer && $timeout.cancel(this.timer);
+            return ContainerObject.prototype.tweenOut.call(this)
         },
         tweenInWithRows: function () {
-            this.isRowsTween = !0, t.play("projects", "wall", !0);
+            this.isRowsTween = !0;
+            SoundManager.play("projects", "wall", !0);
             var e = this.scope.currstate.params.to.dir || 1;
-            this.timer = a(_.bind(this.loop, this), 1e3);
+            this.timer = $timeout(_.bind(this.loop, this), 1e3);
 
             return new TimelineMax({
                 tweens: [
@@ -185,7 +186,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
         },
         tweenOutWithRows: function () {
             this.removeEvents();
-            this.timer && a.cancel(this.timer);
+            this.timer && $timeout.cancel(this.timer);
             var e = this.scope.currstate.params.to.dir || 1;
             return new TimelineMax({
                 tweens: [
@@ -217,7 +218,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
                 t = 0;
             this.removeEvents();
             this.isSideTween = !0;
-            this.timer && a.cancel(this.timer);
+            this.timer && $timeout.cancel(this.timer);
             if (this.scope.currstate.params.to.leaf == this.left.model.route) {
                 e.push(this.openSide(this.left, 1));
                 e.push(this.closeSide(this.right, -1));
@@ -244,7 +245,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
                 t = 0;
             this.isSideTween = !0;
             this.resize(this.scope.stagesize);
-            this.timer = a(_.bind(this.loop, this), 1e3);
+            this.timer = $timeout(_.bind(this.loop, this), 1e3);
             if (this.scope.currstate.params.from.leaf == this.left.model.route) {
                 e.push(this.reverseSideOpen(this.left, 1));
                 e.push(this.reverseSideClose(this.right, -1));
@@ -512,10 +513,10 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
                 ],
                 stagger: .2
             });
-            this.timer = a(_.bind(this.loop, this), 600 * this.repeatDelay)
+            this.timer = $timeout(_.bind(this.loop, this), 600 * this.repeatDelay)
         },
         resize: function (t) {
-            e.prototype.resize.call(this, t);
+            ContainerObject.prototype.resize.call(this, t);
             this.$dashline.clear();
             this.$dashline.y = -t.y;
             this.$dashline.beginFill(this.colors.white, .4);
@@ -577,7 +578,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Leafcta", "Specs
             this.right.$el = null;
             this.left = null;
             this.right = null;
-            e.prototype.destroy.call(this)
+            ContainerObject.prototype.destroy.call(this)
         }
     });
     return o

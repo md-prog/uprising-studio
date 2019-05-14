@@ -86,7 +86,16 @@ module.exports = ["DisplayObject", "UIfactory", "Events", "Math2", "Utils", "Con
         setState: function (e) {
             var t = e.to.data.type;
             t == s.PagesTypes.MENU && this.setMenuState(e);
-            t == s.PagesTypes.INDEX ? this.setIndexState(e) : t == s.PagesTypes.WALL ? this.setWallState(e) : t == s.PagesTypes.LEAF ? this.setLeafState(e) : t == s.PagesTypes.INFOS ? this.setInfosState(e) : t == s.PagesTypes.CLEAF && this.setCLeafState(e)
+            if(t == s.PagesTypes.INDEX)
+                this.setIndexState(e)
+            else if(t == s.PagesTypes.WALL)
+                this.setWallState(e)
+            else if(t == s.PagesTypes.LEAF)
+                this.setLeafState(e)
+            else if(t == s.PagesTypes.INFOS)
+                this.setInfosState(e)
+            else if(t == s.PagesTypes.CLEAF)
+                this.setCLeafState(e)
         },
         setMenuState: function (e) {
             var t = [];

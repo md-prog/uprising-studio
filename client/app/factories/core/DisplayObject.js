@@ -1,10 +1,10 @@
 const _ = require('underscore')
 
-module.exports = ["Utils", function (e) {
+module.exports = ["Utils", function (Utils) {
     function t() {
         this.$el = new PIXI.Sprite;
         this.$el.scope = this;
-        this.colors = e.getColors();
+        this.colors = Utils.getColors();
         this.id = _.uniqueId("object_")
     }
     return t.prototype = {

@@ -1,28 +1,34 @@
 module.exports = [function () {
     return {
-        controller: ["$scope", "$element", "$timeout", "Performance", function (e, t, n, i) {
+        controller: ["$scope", "$element", "$timeout", "Performance", function (scope, $el, $timeout, i) {
             function r() {
                 o = s(), u = o;
                 var t = window.performance.memory.usedJSHeapSize - l;
                 l = window.performance.memory.usedJSHeapSize;
                 var r = 0 > t ? "#ff0054" : "#00ff90",
                     p = a(l, 2),
-                    f = e.stage.children.length,
-                    $ = f > 0 ? e.stage.getChildAt(0).children.length : 0,
+                    f = scope.stage.children.length,
+                    $ = f > 0 ? scope.stage.getChildAt(0).children.length : 0,
                     m = f + "(" + $ + ")",
                     g = m + " + " + _.keys(PIXI.utils.BaseTextureCache).length,
                     v = i.get().label,
                     w = i.get().color;
-                ++h, o > c + 1e3 && (d = Math.round(1e3 * h / (o - c)), n(function () {
-                    e.memory = {
-                        memoryUse: p,
-                        childrenAndCache: g,
-                        performanceColor: w,
-                        performance: v,
-                        memoryColor: r,
-                        frameRate: d
-                    }
-                }), c = o, h = 0)
+                ++h;
+                if (o > c + 1e3) {
+                    d = Math.round(1e3 * h / (o - c));
+                    $timeout(function () {
+                        scope.memory = {
+                            memoryUse: p,
+                            childrenAndCache: g,
+                            performanceColor: w,
+                            performance: v,
+                            memoryColor: r,
+                            frameRate: d
+                        }
+                    });
+                    c = o;
+                    h = 0
+                }
             }
 
             function s() {
@@ -43,7 +49,7 @@ module.exports = [function () {
                 c = o,
                 h = 0,
                 d = 0;
-            e.memory = {
+            scope.memory = {
                 childrenAndCache: 0,
                 performanceColor: 0,
                 performance: "Test...",

@@ -1,7 +1,7 @@
-module.exports = ["DisplayObject", "Utils", function (e, t) {
+module.exports = ["DisplayObject", "Utils", function (DisplayObject, Utils) {
     function n(n, i) {
-        e.call(this);
-        this.dpr = t.getDpr();
+        DisplayObject.call(this);
+        this.dpr = Utils.getDpr();
         this.factory = i;
         this.scope = n;
         this.r = 2 * Math.PI;
@@ -10,7 +10,7 @@ module.exports = ["DisplayObject", "Utils", function (e, t) {
 
     n.prototype = {
         render: function () {
-            e.prototype.render.call(this);
+            DisplayObject.prototype.render.call(this);
             this.renderer = new THREE.WebGLRenderer({
                 antialias: !0,
                 alpha: !1
@@ -23,12 +23,12 @@ module.exports = ["DisplayObject", "Utils", function (e, t) {
             this.scene = new THREE.Scene;
             return this;
         },
-        udpate: function () {
+        update: function () {
             this.renderer.render(this.scene, this.camera);
             this.angle += .5
         },
         destroy: function () {
-            e.prototype.destroy.call(this)
+            DisplayObject.prototype.destroy.call(this)
         }
     };
     

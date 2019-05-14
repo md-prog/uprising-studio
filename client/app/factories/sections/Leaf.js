@@ -1,14 +1,14 @@
 const _ = require('underscore')
 
-module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils", "Events", "Const", function (e, t, n, i, r, s, a) {
+module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils", "Events", "Const", function (ContainerObject, SoundManager, Visual, Caption, Utils, Events, Const) {
     function o(t) {
-        e.call(this, t)
+        ContainerObject.call(this, t)
     }
 
     o.prototype.constructor = o;
-    o.prototype = _.extend(Object.create(e.prototype), {
+    o.prototype = _.extend(Object.create(ContainerObject.prototype), {
         render: function () {
-            e.prototype.render.call(this);
+            ContainerObject.prototype.render.call(this);
             this.texStore = this.scope.data.projects.textures;
             this.collection = this.scope.data.projects.collection;
             this.model = _.where(this.collection, {
@@ -16,9 +16,9 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils
             })[0];
             this.$texture = new PIXI.Texture.fromVideo(this.getTextureSource(this.model));
             this.$texture.baseTexture.source.loop = !0;
-            this.$visual = new n(this.model, this.$texture, 0);
+            this.$visual = new Visual(this.model, this.$texture, 0);
             this.$background = new PIXI.Graphics;
-            this.$caption = new i(this.model);
+            this.$caption = new Caption(this.model);
             this.$mask = new PIXI.Graphics;
             this.$el.addChild(this.$background);
             this.$el.addChild(this.$visual.render().$el);
@@ -32,22 +32,22 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils
         },
         addEvents: function () {
             this.$caption.$cta.click = this.$caption.$cta.tap = _.bind(function () {
-                this.scope.$emit(s.OPEN_LEAF_CONTENT, this.model)
+                this.scope.$emit(Events.OPEN_LEAF_CONTENT, this.model)
             }, this)
         },
         ready: function () {
-            if (e.prototype.ready.call(this), !this.scope) return this;
+            if (ContainerObject.prototype.ready.call(this), !this.scope) return this;
             var t = this.scope.currstate.to,
                 n = this.scope.currstate.from;
-            n.data && n.data.type != a.PagesTypes.MENU && n.data && n.data.type != a.PagesTypes.LEAF && t.data && t.data.type == a.PagesTypes.LEAF && this.$caption.tweenInWithSlide(-1);
+            n.data && n.data.type != Const.PagesTypes.MENU && n.data && n.data.type != Const.PagesTypes.LEAF && t.data && t.data.type == Const.PagesTypes.LEAF && this.$caption.tweenInWithSlide(-1);
             return this;
         },
         update: function () {
             this.$visual && this.$visual.update()
         },
         tweenIn: function () {
-            if (r.isPhone())
-                e.prototype.tweenIn.call(this)
+            if (Utils.isPhone())
+                ContainerObject.prototype.tweenIn.call(this)
             else
                 new TimelineMax({
                     tweens: []
@@ -55,8 +55,8 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils
         },
         tweenOut: function () {
             this.removeEvents()
-            if (r.isPhone())
-                return e.prototype.tweenOut.call(this)
+            if (Utils.isPhone())
+                return ContainerObject.prototype.tweenOut.call(this)
             else
                 return new TimelineMax({
                     tweens: [
@@ -71,7 +71,8 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils
                 })
         },
         tweenInWithSlide: function () {
-            this.resize(this.scope.stagesize), t.play("projects", "leaf", !0);
+            this.resize(this.scope.stagesize);
+            SoundManager.play("projects", "leaf", !0);
             var e = this.scope.currstate.params.to.dir || 1;
             return new TimelineMax({
                 tweens: [
@@ -161,7 +162,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils
             })
         },
         resize: function (t) {
-            e.prototype.resize.call(this, t);
+            ContainerObject.prototype.resize.call(this, t);
             var n = 50,
                 i = 20;
             this.$visual && this.$visual.resize(t);
@@ -186,7 +187,7 @@ module.exports = ["ContainerObject", "SoundManager", "Visual", "Caption", "Utils
             this.$texture = null;
             this.$visual = null;
             this.$mask = null;
-            e.prototype.destroy.call(this)
+            ContainerObject.prototype.destroy.call(this)
         }
     });
 

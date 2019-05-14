@@ -1,8 +1,8 @@
 const _ = require('underscore')
 
-module.exports = ["ContainerObject", "Text", "Utils", function (e, t, n) {
+module.exports = ["ContainerObject", "Text", "Utils", function (ContainerObject, Text, Utils) {
     function i(t, n) {
-        e.call(this, t, n);
+        ContainerObject.call(this, t, n);
         this.labels = {
             title: "Uprising™",
             body: "Via Vigevano 14, 20144\nMilan - Italy\n+39 02 367.54.221\nuprising@uprsg.com",
@@ -23,13 +23,13 @@ module.exports = ["ContainerObject", "Text", "Utils", function (e, t, n) {
     }
 
     i.prototype.constructor = i;
-    i.prototype = _.extend(Object.create(e.prototype), {
+    i.prototype = _.extend(Object.create(ContainerObject.prototype), {
         render: function () {
-            e.prototype.render.call(this);
+            ContainerObject.prototype.render.call(this);
             var i = this.colors;
             this.model = this.scope.data.contacts.collection[0];
             this.texStore = this.scope.data.contacts.textures;
-            this.$title = new t(this.labels.title.toUpperCase(), {
+            this.$title = new Text(this.labels.title.toUpperCase(), {
                 fontFamily: "din-condensed-web",
                 fontSize: 34,
                 fill: i.white,
@@ -53,7 +53,7 @@ module.exports = ["ContainerObject", "Text", "Utils", function (e, t, n) {
                         fill: i.white,
                         letterSpacing: 1
                     }),
-                    a = new t(e.a.toUpperCase(), {
+                    a = new Text(e.a.toUpperCase(), {
                         fontFamily: "din-condensed-web",
                         fontSize: 21,
                         fill: i.red,
@@ -107,7 +107,7 @@ module.exports = ["ContainerObject", "Text", "Utils", function (e, t, n) {
             this.$el.addChild(this.$video);
             this.$el.addChild(this.$holder);
             this.addEvents();
-            this.texStore.items.contacts && this.texStore.items.contacts.paused && !n.isMobile() && this.texStore.items.contacts.play();
+            this.texStore.items.contacts && this.texStore.items.contacts.paused && !Utils.isMobile() && this.texStore.items.contacts.play();
             return this
         },
         addEvents: function () {
@@ -145,13 +145,13 @@ module.exports = ["ContainerObject", "Text", "Utils", function (e, t, n) {
             })
         },
         destroy: function () {
-            "contacts.leaf" == this.scope.currstate.to.name || this.texStore.items.contacts.paused || n.isMobile() || this.texStore.items.contacts.pause();
+            "contacts.leaf" == this.scope.currstate.to.name || this.texStore.items.contacts.paused || Utils.isMobile() || this.texStore.items.contacts.pause();
             this.removeEvents();
             this.$video.destroy(!0);
             this.$holder.destroy(!0);
             this.$video = null;
             this.$holder = null;
-            e.prototype.destroy.call(this)
+            ContainerObject.prototype.destroy.call(this)
         }
     });
     return i

@@ -1,22 +1,22 @@
 const _ = require('underscore')
 
-module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Menugrid", "Holdrag", "Events", "Utils", "Math2", function (e, t, n, i, r, s, a, o) {
+module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Menugrid", "Holdrag", "Events", "Utils", "Math2", function (DisplayObject, ThreeManager,SoundManager, Menugrid, Holdrag, Events, Utils, Math2) {
     function l(t) {
-        e.call(this), this.scope = t || {}
+        DisplayObject.call(this), this.scope = t || {}
     }
 
     l.prototype.constructor = l;
-    l.prototype = _.extend(Object.create(e.prototype), {
+    l.prototype = _.extend(Object.create(DisplayObject.prototype), {
         render: function () {
-            e.prototype.render.call(this);
-            var n = t.getTexture("menu"),
-                s = t.getStore().menu.scene.dpr;
+            DisplayObject.prototype.render.call(this);
+            var n = ThreeManager.getTexture("menu"),
+                s = ThreeManager.getStore().menu.scene.dpr;
             this.$base = new PIXI.Graphics;
             this.$el.addChild(this.$base);
-            this.$scene = new i(n, s);
+            this.$scene = new Menugrid(n, s);
             this.$el.addChild(this.$scene.render().$el);
             this.$scene.filters = [this.getGlitch()];
-            this.$holdrag = new r("Hold down & drag to rotate");
+            this.$holdrag = new Holdrag("Hold down & drag to rotate");
             this.$el.addChild(this.$holdrag.render().$el);
             this.$el.interactive = !0;
             return this
@@ -30,8 +30,8 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Menugrid", "
         },
         getGlitch: function () {
             var e = new PIXI.filters.GlitchFilter;
-            e.resolution = a.getDpr();
-            e.angle = o.randFloat(-Math.PI, Math.PI);
+            e.resolution = Utils.getDpr();
+            e.angle = Math2.randFloat(-Math.PI, Math.PI);
             e.distortionX = -1;
             e.distortionY = -1;
             e.amount = .0015;
@@ -42,7 +42,7 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Menugrid", "
             return e
         },
         tweenIn: function () {
-            n.play("menu", "tweens", !0);
+            SoundManager.play("menu", "tweens", !0);
             return new TimelineMax({
                 tweens: [
                     TweenMax.to(this.$scene.filters[0], 1, {
@@ -60,7 +60,7 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Menugrid", "
         },
         tweenOut: function () {
             this.$holdrag.kill();
-            n.play("menu", "tweens", !0);
+            SoundManager.play("menu", "tweens", !0);
 
             return new TimelineMax({
                 tweens: [
@@ -87,14 +87,14 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Menugrid", "
             this.$el.y = e.y
         },
         destroy: function () {
-            t.clear("menu");
+            ThreeManager.clear("menu");
             this.$base.destroy();
             this.$scene.destroy();
             this.$holdrag.destroy();
             this.$holdrag = null;
             this.$scene = null;
             this.$base = null;
-            e.prototype.destroy.call(this)
+            DisplayObject.prototype.destroy.call(this)
         }
     });
     

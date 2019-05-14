@@ -221,8 +221,8 @@ module.exports = ["ThreeObject", "SoundManager", "Math2", "Events", function (e,
         isTeamPage: function () {
             return "team" == this.scope.currstate.params.to.page
         },
-        udpate: function () {
-            e.prototype.udpate.call(this), this.updateCamera();
+        update: function () {
+            e.prototype.update.call(this), this.updateCamera();
             this.updateParticles(), this.updateTeamFaces()
         },
         updateCamera: function () {

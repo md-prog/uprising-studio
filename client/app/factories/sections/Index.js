@@ -1,21 +1,21 @@
 const _ = require('underscore')
 
-module.exports = ["SectionObject", function (e) {
+module.exports = ["SectionObject", function (SectionObject) {
     function t(t, n) {
-        e.call(this, t, n)
+        SectionObject.call(this, t, n)
     }
     
     t.prototype.constructor = t;
-    t.prototype = _.extend(Object.create(e.prototype), {
+    t.prototype = _.extend(Object.create(SectionObject.prototype), {
         render: function () {
-            e.prototype.render.call(this)
+            SectionObject.prototype.render.call(this)
             return this
         },
         loop: function () {
             return !1
         },
         resize: function (t) {
-            e.prototype.resize.call(this, t);
+            SectionObject.prototype.resize.call(this, t);
             this.$topLine.clear();
             this.$botLine.clear()
         }

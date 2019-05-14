@@ -1,6 +1,6 @@
 const e = require('underscore')
 
-function t(t, n, i, r, s, a, o, l, u, c) {
+module.exports = ["$scope", "$state", "$rootScope", "$controller", "$urlRouter", "$timeout", "DataLoader", "Events", "Utils", "Const", function (t, n, i, r, s, a, o, Events, Utils, Const) {
     var h = $(window),
         d = $(document),
         p = 0,
@@ -64,7 +64,7 @@ function t(t, n, i, r, s, a, o, l, u, c) {
         }, s.sync()
     };
     this.onStateChange = function (e, n, i, r, s, a) {
-        return u.getWebgl() ? !t.loaded || t.isLoading ? (e.preventDefault(), !1) : (t.currstate = {
+        return Utils.getWebgl() ? !t.loaded || t.isLoading ? (e.preventDefault(), !1) : (t.currstate = {
             model: this.getModel(n.data.instance),
             to: n,
             from: r,
@@ -76,25 +76,25 @@ function t(t, n, i, r, s, a, o, l, u, c) {
     };
     this.onWheel = function (e) {
         var t = 0,
-            n = c.DirsTipes.VERT;
-        u.getTime() - p;
-        p = u.getTime();
+            n = Const.DirsTipes.VERT;
+        Utils.getTime() - p;
+        p = Utils.getTime();
         e.deltaY > 0 && (t = -1);
         e.deltaY < 0 && (t = 1);
         0 != t && this.setDir(t, n)
     };
     this.onKey = function (e) {
         var t = 0,
-            n = c.DirsTipes.VERT,
-            i = u.getTime() - m;
-        m = u.getTime();
+            n = Const.DirsTipes.VERT,
+            i = Utils.getTime() - m;
+        m = Utils.getTime();
         40 == e.keyCode && (t = 1);
         38 == e.keyCode && (t = -1);
         (40 == e.keyCode || 38 == e.keyCode && i > f) && this.setDir(t, n)
     };
     this.onSwipe = function (e, t) {
         var n, i = 0;
-        t.direction == Hammer.DIRECTION_UP && (i = 1, n = c.DirsTipes.VERT), t.direction == Hammer.DIRECTION_DOWN && (i = -1, n = c.DirsTipes.VERT), t.direction == Hammer.DIRECTION_LEFT && (i = 1, n = c.DirsTipes.HORIZ), t.direction == Hammer.DIRECTION_RIGHT && (i = -1, n = c.DirsTipes.HORIZ), this.setDir(i, n)
+        t.direction == Hammer.DIRECTION_UP && (i = 1, n = Const.DirsTipes.VERT), t.direction == Hammer.DIRECTION_DOWN && (i = -1, n = Const.DirsTipes.VERT), t.direction == Hammer.DIRECTION_LEFT && (i = 1, n = Const.DirsTipes.HORIZ), t.direction == Hammer.DIRECTION_RIGHT && (i = -1, n = Const.DirsTipes.HORIZ), this.setDir(i, n)
     };
     this.setDir = function (e, n) {
         e != t.direction.value && (t.direction = {
@@ -124,17 +124,15 @@ function t(t, n, i, r, s, a, o, l, u, c) {
         })
     };
     t.resize = function () {
-        h.trigger(l.RESIZE)
+        h.trigger(Events.RESIZE)
     };
     i.$on("$stateChangeStart", e.bind(this.onStateChange, this));
-    h.on(l.RESIZE, e.bind(this.resize, this)).trigger(l.RESIZE);
-    d.on(l.TOUCH_MOVE, function (e) {
+    h.on(Events.RESIZE, e.bind(this.resize, this)).trigger(Events.RESIZE);
+    d.on(Events.TOUCH_MOVE, function (e) {
         e.preventDefault()
     }, !1);
-    d.on(l.MOUSE_WHEEL, e.bind(this.onWheel, this));
-    d.on(l.KEY_DOWN, e.bind(this.onKey, this));
-    t.$on(l.SWIPE, e.bind(this.onSwipe, this));
+    d.on(Events.MOUSE_WHEEL, e.bind(this.onWheel, this));
+    d.on(Events.KEY_DOWN, e.bind(this.onKey, this));
+    t.$on(Events.SWIPE, e.bind(this.onSwipe, this));
     o.load().then(e.bind(this.ready, this))
-}
-
-module.exports = ["$scope", "$state", "$rootScope", "$controller", "$urlRouter", "$timeout", "DataLoader", "Events", "Utils", "Const", t]
+}]

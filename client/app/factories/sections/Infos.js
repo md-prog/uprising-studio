@@ -1,15 +1,15 @@
 const _ = require('underscore')
 
-module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro", "Identity", "Clients", "Holdrag", "Utils", "Events", "Math2", function (e, t, n, i, r, s, a, o, l, u) {
+module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro", "Identity", "Clients", "Holdrag", "Utils", "Events", "Math2", function (DisplayObject, ThreeManager, SoundManager, Aboutintro, Identity, Clients, Holdrag, Utils, Events, Math2) {
     function c(t) {
-        e.call(this), this.scope = t || {}
+        DisplayObject.call(this), this.scope = t || {}
     }
 
     c.prototype.constructor = c;
-    c.prototype = _.extend(Object.create(e.prototype), {
+    c.prototype = _.extend(Object.create(DisplayObject.prototype), {
         render: function () {
-            e.prototype.render.call(this);
-            var n = t.getTexture("infos"),
+            DisplayObject.prototype.render.call(this);
+            var n = ThreeManager.getTexture("infos"),
                 r = this.scope.data.infos.clients;
 
             this.$base = new PIXI.Graphics;
@@ -17,8 +17,8 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
             this.$scene = new PIXI.Sprite(n);
             this.$scene.anchor.x = .5;
             this.$scene.anchor.y = .5;
-            this.$intro = new i;
-            this.$clients = new s(r);
+            this.$intro = new Aboutintro;
+            this.$clients = new Clients(r);
             this.$lines = new PIXI.Sprite;
             this.$baseline = new PIXI.Graphics;
             this.$tweenline = new PIXI.Sprite;
@@ -48,7 +48,7 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
             this.$mouselabelsMask.drawRect(-5, -5, this.$mouselabel1.width + 10, this.$mouselabel1.height + 10);
             this.$mouselabel2.x = this.$mouselabel1.width + 10;
             this.$holder = new PIXI.Sprite;
-            this.$holdrag = new a("Hold down & drag to discover the team");
+            this.$holdrag = new Holdrag("Hold down & drag to discover the team");
             this.$lines.addChild(this.$baseline);
             this.$lines.addChild(this.$tweenline);
             this.$tweenline.addChild(this.$tweenlineGraph);
@@ -72,13 +72,13 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
             var t = [];
             this.identity && t.push(this.identity.tweenOut());
             if (e) {
-                this.identity = new r(e);
+                this.identity = new Identity(e);
                 this.$holder.addChild(this.identity.render().$el);
                 t.push(this.identity.tweenIn())
             } else {
                 this.identity = null;
             }
-            n.play("about", "copytween", !0);
+            SoundManager.play("about", "copytween", !0);
             return new TimelineMax({
                 tweens: t,
                 stagger: .15
@@ -94,9 +94,9 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
         setState: function (e) {
             var i = [],
                 r = e.params.to.page,
-                s = t.getStore().infos.scene;
+                s = ThreeManager.getStore().infos.scene;
             this.timeline && this.timeline.kill();
-            this.initState && n.play("about", "scroll", !0);
+            this.initState && SoundManager.play("about", "scroll", !0);
             if ("intro" == r) {
                 i.push(s.tweenOut());
                 i.push(this.$intro.tweenIn());
@@ -154,7 +154,7 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
                     stagger: 1.35,
                     repeat: -1
                 });
-                n.play("about", "introtween", !0)
+                SoundManager.play("about", "introtween", !0)
             } else {
                 if ("team" == r) {
                     i.push(s.tweenIn());
@@ -235,7 +235,7 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
                             stagger: .1
                         }));
                         this.loopTimeline && this.loopTimeline.kill();
-                        n.play("about", "introtween", !0)
+                        SoundManager.play("about", "introtween", !0)
                     }
                 }
             }
@@ -247,8 +247,8 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
         },
         getGlitch: function () {
             var e = new PIXI.filters.GlitchFilter;
-            e.resolution = o.getDpr();
-            e.angle = u.randFloat(-Math.PI, Math.PI);
+            e.resolution = Utils.getDpr();
+            e.angle = Math2.randFloat(-Math.PI, Math.PI);
             e.distortionX = -1;
             e.distortionY = -1;
             e.amount = .0015;
@@ -291,7 +291,7 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
         },
         resize: function (e) {
             var n = 1,
-                i = t.getStore().infos.scene.dpr;
+                dpr = ThreeManager.getStore().infos.scene.dpr;
             this.$base.clear();
             this.$base.beginFill(this.colors.red, 0);
             this.$base.drawRect(-e.x, -e.y, e.w, e.h);
@@ -308,11 +308,11 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
             this.$mouselabels.y = e.y - 80;
             this.identity && this.identity.resize(e);
             n = e.w / e.h > 1280 / 720 ? e.w / 1280 : e.h / 720;
-            this.$scene.scale.x = n / i;
-            this.$scene.scale.y = n / i;
+            this.$scene.scale.x = n / dpr;
+            this.$scene.scale.y = n / dpr;
         },
         destroy: function () {
-            t.clear("infos");
+            ThreeManager.clear("infos");
             this.loopTimeline && this.loopTimeline.kill();
             this.identity && this.identity.destroy();
             this.$base.destroy();
@@ -335,7 +335,7 @@ module.exports = ["DisplayObject", "ThreeManager", "SoundManager", "Aboutintro",
             this.$scene = null;
             this.$lines = null;
             this.$base = null;
-            e.prototype.destroy.call(this)
+            DisplayObject.prototype.destroy.call(this)
         }
     });
     return c

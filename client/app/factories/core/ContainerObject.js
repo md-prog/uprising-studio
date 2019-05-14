@@ -1,8 +1,8 @@
 const _ = require("underscore")
 
-module.exports = ["DisplayObject", "$timeout", "Utils", function (e, t, n) {
+module.exports = ["DisplayObject", "$timeout", "Utils", function (DisplayObject, $timeout, Utils) {
     function i(t, n) {
-        e.call(this);
+        DisplayObject.call(this);
         this.model = n || {};
         this.scope = t || {};
         this.timer = null;
@@ -10,13 +10,15 @@ module.exports = ["DisplayObject", "$timeout", "Utils", function (e, t, n) {
         this.loopTimeline = null;
         this.id = _.uniqueId("section_")
     }
-    return i.prototype.constructor = i, i.prototype = _.extend(Object.create(e.prototype), {
+
+    i.prototype.constructor = i;
+    i.prototype = _.extend(Object.create(DisplayObject.prototype), {
         render: function () {
-            return e.prototype.render.call(this), this
+            return DisplayObject.prototype.render.call(this), this
         },
         getTexture: function (e) {
             var t, i = this.getTextureSource(e);
-            if (n.isMobile()) {
+            if (Utils.isMobile()) {
                 var r = new PIXI.BaseTexture(i);
                 t = new PIXI.Texture(r)
             } else {
@@ -70,7 +72,9 @@ module.exports = ["DisplayObject", "$timeout", "Utils", function (e, t, n) {
             return this.tweenOut()
         },
         resize: function (e) {
-            this.$el.x = e.x, this.$el.y = e.y, this.stagesize = {
+            this.$el.x = e.x;
+            this.$el.y = e.y;
+            this.stagesize = {
                 w: e.w,
                 h: e.h,
                 x: e.x,
@@ -79,7 +83,7 @@ module.exports = ["DisplayObject", "$timeout", "Utils", function (e, t, n) {
         },
         removeEvents: function () {},
         destroy: function () {
-            this.timer && t.cancel(this.timer);
+            this.timer && $timeout.cancel(this.timer);
             this.loopTimeline && this.loopTimeline.kill();
             this.timeline && this.timeline.kill();
             this.timer = null;
@@ -88,7 +92,8 @@ module.exports = ["DisplayObject", "$timeout", "Utils", function (e, t, n) {
             this.stagesize = null;
             this.scope = null;
             this.model = null;
-            e.prototype.destroy.call(this)
+            DisplayObject.prototype.destroy.call(this)
         }
-    }), i
+    });
+    return i
 }]

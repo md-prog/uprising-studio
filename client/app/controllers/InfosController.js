@@ -1,20 +1,20 @@
 const _ = require('underscore')
 
-function e(e, t, n, i, r) {
+module.exports = ["$scope", "$state", "$timeout", "Events", "Const", function InfosController(scope, $state, $timeout, Events, Const) {
     this.count = 0;
     this.pages = ["intro", "team", "clients"];
     this.limit = this.pages.length - 1;
     this.addEvents = function () {
-        e.$on(i.SNAP_TEAM, _.bind(function (n, i) {
-            t.current.data.type == r.PagesTypes.INFOS && e.section.setIdentity(i)
+        scope.$on(Events.SNAP_TEAM, _.bind(function (n, i) {
+            $state.current.data.type == Const.PagesTypes.INFOS && scope.section.setIdentity(i)
         }, this))
     };
     this.setState = function (t) {
         this.count = _.indexOf(this.pages, t.params.to.page);
-        if (e.section && e.section.setState)
-            return void(t.to.data.type == r.PagesTypes.INFOS && e.section.setState(t))
+        if (scope.section && scope.section.setState)
+            return void(t.to.data.type == Const.PagesTypes.INFOS && scope.section.setState(t))
         else
-            return n(_.bind(function () {
+            return $timeout(_.bind(function () {
                 this.setState(t)
             }, this))
     };
@@ -22,10 +22,8 @@ function e(e, t, n, i, r) {
         this.count += e;
         this.count < 0 && (this.count = 0);
         this.count > this.limit && (this.count = this.limit);
-        t.go("about.scroll", {
+        $state.go("about.scroll", {
             page: this.pages[this.count]
         })
     }
-}
-
-module.exports = ["$scope", "$state", "$timeout", "Events", "Const", e]
+}]
